@@ -4,26 +4,26 @@ import Link from "next/link";
 const Hero = () => {
   const heroImages = [
     {
-      src: "/mugs-others.jpeg",
-      alt: "Image of a personalized mug and canteen",
+      src: "/camiseta-dama-talles.png",
+      alt: "sublimated t-shirt with various sizes",
       rotation: "rotate-[-5deg]",
       priority: true,
     },
     {
-      src: "/mug-canteen.jpeg",
-      alt: "Image of a personalized mugs and other products",
+      src: "/funda-almohadon.png",
+      alt: "Sublimated cushion cover with a colorful design",
       rotation: "rotate-[5deg]",
       priority: false,
     },
     {
-      src: "/products-sublimation.png",
-      alt: "Image of a personalized sublimation products",
+      src: "/magic-mug.png",
+      alt: "Sublimated magic mug with reveal design",
       rotation: "rotate-[3deg]",
       priority: false,
     },
     {
-      src: "/Sublimation-small-format.png",
-      alt: "Image of a personalized small format sublimation products",
+      src: "/te-quiero-mug.png",
+      alt: "Sublimated mug with a heart design",
       rotation: "rotate-[-3deg]",
       priority: false,
     },
@@ -69,7 +69,7 @@ const Hero = () => {
                       sizes="(max-width: 768px) 45vw, (max-width: 1200px) 25vw, 20vw"
                       priority={image.priority}
                       loading={image.priority ? "eager" : "lazy"}
-                      className="object-cover rounded-lg"
+                      className="object-contain"
                       quality={85}
                     />
                   </div>

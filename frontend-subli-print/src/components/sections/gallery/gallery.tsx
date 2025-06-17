@@ -8,22 +8,22 @@ const Gallery = () => {
     <div className="container mx-auto p-6 shadow-2xl">
       <Suspense fallback={<Skeleton />}>
         <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-4 gap-4 mb-4">
-          <div className="flex md:col-span-2 md:row-span-4 h-full relative rounded-lg overflow-hidden">
+          <div className="flex md:col-span-2 md:row-span-4 h-full relative rounded-lg overflow-hidden transition-color hover:border-2 hover:border-blue-600">
             <Image
-              src="/sublimacion.jpg"
+              src="/articulos-personalizados-sublimacion.png"
               alt="Image with logo name and inputs of sublimation"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              loading="lazy"
+              priority
               className="object-cover"
             />
           </div>
           <div className="row-span-4 md:col-start-3">
             <div className="grid grid-cols-1 grid-rows-4 gap-4">
               <div className="row-span-2">
-                <div className="h-60 relative rounded-lg overflow-hidden">
+                <div className="h-60 relative rounded-lg overflow-hidden transition-color hover:border-2 hover:border-blue-600">
                   <Image
-                    src="/articulos-personalizados-sublimacion.jpg"
+                    src="/sublimated-products.webp"
                     alt="Image with personalized items"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     loading="lazy"
@@ -33,9 +33,9 @@ const Gallery = () => {
                 </div>
               </div>
               <div className="row-span-2 row-start-3">
-                <div className="h-60 relative rounded-lg overflow-hidden">
+                <div className="h-60 relative rounded-lg overflow-hidden transition-color hover:border-2 hover:border-blue-600">
                   <Image
-                    src="/Sublimation-small-format.png"
+                    src="/Sublimation-Printing.png"
                     alt="Image with more personalized items"
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -54,7 +54,7 @@ const Gallery = () => {
                 {[...carouselImages, ...carouselImages].map((info, index) => (
                   <div
                     key={`img-${index}`}
-                    className="w-80 h-40 flex-shrink-0 relative rounded-lg overflow-hidden"
+                    className="w-80 h-40 flex-shrink-0 relative rounded-lg overflow-hidden transition-color hover:border-2 hover:border-blue-600"
                   >
                     <Image
                       src={info.url}
