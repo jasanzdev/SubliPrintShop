@@ -1,0 +1,142 @@
+export const products = [
+  {
+    image: "/products/azulejos.png",
+    alt: "Azulejo sublimable",
+    price: 315,
+    description: "Azulejo Cerámicas Sublimables 20 X 20",
+  },
+  {
+    image: "/products/body.png",
+    alt: "body de bebe sublimable",
+    price: 350,
+    description: "Body Sublimable P/ Bebé 0 Al 12 Meses",
+  },
+  {
+    image: "/products/bolsa-sublimable.png",
+    alt: "bolza de tela sublimable",
+    price: 450,
+    description:
+      "Bolsa Personalizadas Sublimación En Tela Reutilizable 40x35 Crema",
+  },
+  {
+    image: "/products/camiseta-dama.png",
+    alt: "Camiseta de dama sublimable",
+    price: 500,
+    description: "Camiseta Speedway Sublimable Dama",
+  },
+  {
+    image: "/products/camiseta-dama-talles.png",
+    alt: "Camisetas sublimables con tabla de talles",
+    price: 500,
+    description: "Camiseta Speedway Sublimable Dama",
+  },
+  {
+    image: "/products/cantimplora.png",
+    alt: "Cantimplora Sublimable",
+    price: 300,
+    description: "Cantimplora Sublimable Botella Blanca",
+  },
+  {
+    image: "/products/magic-mug.png",
+    alt: "Taza magica sublimable con proceso de revelacion de imagen",
+    price: 350,
+    description: "Tazas Mágicas Personalizadas Con Tus Fotos/diseños",
+  },
+  {
+    image: "/products/mate-blanco.png",
+    alt: "mate blanco sublimable",
+    price: 300,
+    description: "Mate Cilíndrico Personalizado",
+  },
+  {
+    image: "/products/mate-dia-abuelos.png",
+    alt: "mate sublimable personalizdo por el dia de los abuelos",
+    price: 300,
+    description: "Mate Cilíndrico Personalizado",
+  },
+  {
+    image: "/products/remera-manga-negra-sublimada.png",
+    alt: "remera manga negra personalizada",
+    price: 550,
+    description: "Camiseta Sublimable Adulto Combinada",
+  },
+  {
+    image: "/products/remera-sublimable-unisex-blanco.png",
+    alt: "remera sublimable blanca unisex",
+    price: 550,
+    description: "Remeras Personalizada Sublimacion",
+  },
+  {
+    image: "/products/shirt-batman.png",
+    alt: "remera personalizada con batman",
+    price: 550,
+    description: "Camiseta Sublimable Adulto Combinada",
+  },
+  {
+    image: "/products/shirt-child.png",
+    alt: "remera de ninos sublimable",
+    price: 500,
+    description: "Camisetas Dry Cool Niño Sublimable",
+  },
+  {
+    image: "/products/shirt-dad.png",
+    alt: "remera personalizada con papa en practicas",
+    price: 550,
+    description: "",
+  },
+  {
+    image: "/products/shirt-manga-azul.png",
+    alt: "remera manga azul sublimable",
+    price: 550,
+    description: "Camiseta Sublimable Adulto Combinada",
+  },
+  {
+    image: "/products/shirt-manga-love.png",
+    alt: "remera manga negra personalizada love",
+    price: 550,
+    description: "Camiseta Sublimable Adulto Combinada",
+  },
+  {
+    image: "/products/shirt-manga-negra.png",
+    alt: "remera manga negra personalizada",
+    price: 550,
+    description: "Camiseta Sublimable Adulto Combinada",
+  },
+  {
+    image: "/products/shirt-morat.png",
+    alt: "remera manga negra personalizada",
+    price: 550,
+    description: "Camiseta Sublimable Adulto Combinada",
+  },
+  {
+    image: "/products/shit-bad-bunny.png",
+    alt: "remera manga negra personalizada",
+    price: 550,
+    description: "Camiseta Sublimable Adulto Combinada",
+  },
+  {
+    image: "/products/te-quiero-mug.png",
+    alt: "Taza personalida",
+    price: 180,
+    description: "Tazas Personalizadas Con Tus Fotos O Diseños",
+  },
+  {
+    image: "/products/termo.png",
+    alt: "termo sublimable",
+    price: 500,
+    description: "Termo Termo 1/2 Litro 500ml",
+  },
+];
+
+export const carouselImages = [
+  { url: "/carousel/Alexander1.png", alt: "Alexander1" },
+  { url: "/carousel/amigas.png", alt: "amigas" },
+  { url: "/carousel/asere.png", alt: "asere" },
+  { url: "/carousel/deiler-camaguey.png", alt: "DeilerCamaguey" },
+  { url: "/carousel/mate-mama.png", alt: "mate-mama" },
+  { url: "/carousel/NACIONAL.png", alt: "NACIONAL" },
+  { url: "/carousel/alex-nino.png", alt: "alex-nino" },
+  { url: "/carousel/Susana1.png", alt: "Susana1" },
+  { url: "/carousel/tony-termo.png", alt: "tony-termo" },
+  { url: "/carousel/yemily4.png", alt: "yemily4" },
+];
