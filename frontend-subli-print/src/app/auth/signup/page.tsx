@@ -8,6 +8,7 @@ import { CreateUserService } from "@/services/userService";
 import { PasswordInput } from "@/components/auth/password-input";
 
 export default function SignUp() {
+  const [errors, setErrors] = useState<string[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState<CreateUserType>({
@@ -37,14 +38,16 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      const response = await CreateUserService(formData);
-
-      if (response.success) {
-        setTimeout(() => {}, 2000);
-      }
-    } catch (error) {
-      console.error("Error creating user:", error);
+    const { user, errors } = await CreateUserService(formData);
+    if (errors) {
+      setErrors(errors);
+      return;
+    }
+    if (user) {
+      console.log("User created successfully:", user);
+      // Redirect or show success message
+      // For example, you can redirect to the sign-in page:
+      window.location.href = "/auth/signin";
     }
   };
 
@@ -57,7 +60,17 @@ export default function SignUp() {
               Create an account
             </h1>
           </div>
-
+          <div className="flex flex-col place-content-center text-center mx-auto max-w-[600px]">
+            {errors.length > 0 && (
+              <div className="mb-4 text-red-600">
+                <ul>
+                  {errors.map((error, index) => (
+                    <li key={index}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
           <form onSubmit={handleSubmit} className="mx-auto max-w-[400px]">
             <div className="space-y-5">
               <FormInput

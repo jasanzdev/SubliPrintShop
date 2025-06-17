@@ -46,3 +46,10 @@ export type AuthContextType = {
   login: (token: string) => void;
   logout: () => void;
 };
+
+export type GQLFormattedError = {
+  statusCode: number;
+  error: string;
+  message: string[];
+  timestamp: string;
+};
