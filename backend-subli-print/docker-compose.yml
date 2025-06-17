@@ -1,0 +1,55 @@
+services:
+  mongodb:
+    image: mongo:8.0.10-noble
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: jasanz
+      MONGO_INITDB_ROOT_PASSWORD: J4s4nz
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - '27017:27017'
+  backend:
+    image: subli_print:latest
+    container_name: subli_print
+    build:
+      context: .
+      target: prod
+      dockerfile: Dockerfile
+      args:
+        - 'PORT=${PORT}'
+    ports:
+      - '${PORT}:${PORT}'
+    environment:
+      - NODE_ENV=production
+  backend-dev:
+    image: subli_print_dev:latest
+    container_name: subli_print_dev
+    restart: unless-stopped
+    build:
+      context: .
+      target: dev
+      dockerfile: Dockerfile
+      args:
+        - PORT=${PORT}
+    command: npm run start:dev
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /src
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    env_file:
+      - .env
+    ports:
+      - '${PORT}:${PORT}'
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_data:
