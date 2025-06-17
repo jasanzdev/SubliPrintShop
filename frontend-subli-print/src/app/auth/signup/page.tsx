@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { FormInput } from "@/components/auth/form-input";
 import { ChangeEvent, useState } from "react";
-import { CreateUserType } from "@/types/types";
+import { CreateUserType, GQLFormattedError } from "@/types/types";
 import { CreateUserService } from "@/services/userService";
 import { PasswordInput } from "@/components/auth/password-input";
 
 export default function SignUp() {
-  const [errors, setErrors] = useState<string[]>([]);
+  const [error, setError] = useState<GQLFormattedError["message"]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState<CreateUserType>({
@@ -38,17 +38,16 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { user, errors } = await CreateUserService(formData);
-    if (errors) {
-      setErrors(errors);
+    const { user, error } = await CreateUserService(formData);
+    if (error) {
+      setError(error.message);
       return;
     }
-    if (user) {
-      console.log("User created successfully:", user);
-      // Redirect or show success message
-      // For example, you can redirect to the sign-in page:
-      window.location.href = "/auth/signin";
-    }
+
+    console.log("User created successfully:", user);
+    // Redirect or show success message
+    // For example, you can redirect to the sign-in page:
+    window.location.href = "/auth/signin";
   };
 
   return (
@@ -60,23 +59,13 @@ export default function SignUp() {
               Create an account
             </h1>
           </div>
-          <div className="flex flex-col place-content-center text-center mx-auto max-w-[600px]">
-            {errors.length > 0 && (
-              <div className="mb-4 text-red-600">
-                <ul>
-                  {errors.map((error, index) => (
-                    <li key={index}>{error}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
           <form onSubmit={handleSubmit} className="mx-auto max-w-[400px]">
             <div className="space-y-5">
               <FormInput
                 id="name"
                 name="name"
                 type="text"
+                error={error?.find((err) => err.field === "name")?.message}
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Your full name"
@@ -88,6 +77,7 @@ export default function SignUp() {
                 id="username"
                 name="username"
                 type="text"
+                error={error?.find((err) => err.field === "username")?.message}
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="Your username"
@@ -99,6 +89,7 @@ export default function SignUp() {
                 id="email"
                 name="email"
                 type="email"
+                error={error?.find((err) => err.field === "email")?.message}
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Your Email"
@@ -110,6 +101,7 @@ export default function SignUp() {
                 id="password"
                 name="password"
                 value={formData.password}
+                error={error?.find((err) => err.field === "password")?.message}
                 placeholder="Type Password"
                 label="Password"
                 required
@@ -121,6 +113,9 @@ export default function SignUp() {
               <PasswordInput
                 id="confirmPassword"
                 name="confirmPassword"
+                error={
+                  error?.find((err) => err.field === "confirmPassword")?.message
+                }
                 value={formData.confirmPassword}
                 placeholder="Confirm Password"
                 label="Confirm Password"

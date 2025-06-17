@@ -19,13 +19,13 @@ export type User = {
   role: string;
 };
 
-export type CreateUserType = {
+export interface CreateUserType {
   name: string;
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
-};
+}
 
 export interface CreateUserResponse {
   props: {
@@ -48,8 +48,10 @@ export type AuthContextType = {
 };
 
 export type GQLFormattedError = {
-  statusCode: number;
   error: string;
-  message: string[];
-  timestamp: string;
+  message: {
+    field: string;
+    message: string;
+  }[];
+  statusCode: number;
 };

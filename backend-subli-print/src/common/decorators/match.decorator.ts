@@ -28,7 +28,7 @@ export function Match(property: string, validationOptions?: ValidationOptions) {
 
         defaultMessage(args: ValidationArguments): string {
           const [relatedPropertyName] = args.constraints as [string];
-          return `${args.property} must match ${relatedPropertyName}`;
+          return `The ${args.property} must match ${relatedPropertyName}`;
         },
       },
     });

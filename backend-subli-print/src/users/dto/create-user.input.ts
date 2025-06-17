@@ -7,10 +7,12 @@ import { IsValidRole } from 'src/common/decorators/valid-role.decorator';
 export class CreateUserInput {
   @Field()
   @IsString()
+  @MinLength(3)
   name: string;
 
   @Field()
   @IsString()
+  @MinLength(3)
   username: string;
 
   @Field()
@@ -28,8 +30,7 @@ export class CreateUserInput {
 
   @Field()
   @IsString()
-  @MinLength(6)
-  @Match('newPassword', { message: 'Passwords do not match' })
+  @Match('password')
   confirmPassword: string;
 
   @Field({ nullable: true })

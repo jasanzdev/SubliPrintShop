@@ -35,27 +35,27 @@ export async function CreateUser(userInput: CreateUserType) {
     };
   } catch (error) {
     if (error instanceof ApolloError) {
-      if (
-        error.graphQLErrors[0]?.extensions &&
-        "formattedError" in error.graphQLErrors[0]?.extensions
-      ) {
-        const formattedError = error.graphQLErrors[0].extensions
-          .formattedError as GQLFormattedError;
-        return {
-          props: { success: false, errors: formattedError.message },
-        };
-      }
       return {
         props: {
           success: false,
-          errors: [error.graphQLErrors[0]?.message],
+          error: error.graphQLErrors[0]?.extensions
+            ?.message as GQLFormattedError,
         },
       };
     }
     return {
       props: {
         success: false,
-        errors: ["An unexpected error occurred"],
+        error: {
+          error: "An unexpected error occurred",
+          message: [
+            {
+              field: "general",
+              message: "An unexpected error occurred. Please try again later.",
+            },
+          ],
+          statusCode: 500,
+        },
       },
     };
   }

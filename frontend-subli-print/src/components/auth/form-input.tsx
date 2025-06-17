@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 
 interface FormInputProps {
   id: string;

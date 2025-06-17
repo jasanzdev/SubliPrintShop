@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { envs } from './core/config/envs';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 
 async function bootstrap() {
@@ -33,7 +33,18 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
+      forbidNonWhitelisted: true,
       transform: true,
+      stopAtFirstError: false,
+      exceptionFactory: (errors) => {
+        const result = errors.map((error) => ({
+          field: error.property,
+          message: error.constraints
+            ? Object.values(error.constraints)[0]
+            : 'Validation error',
+        }));
+        return new BadRequestException(result);
+      },
     }),
   );
   app.setGlobalPrefix('api/jasanz');

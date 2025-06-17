@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 interface PasswordInputProps {

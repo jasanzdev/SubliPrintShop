@@ -23,11 +23,11 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
       return;
     }
 
-    const formattedError = this.getFormattedResponse(exception);
-
     throw new GraphQLError('Validation Error', {
       extensions: {
-        formattedError,
+        statusCode: exception.getStatus(),
+        error: 'Bad Request',
+        message: exception.getResponse(),
       },
     });
   }
@@ -44,6 +44,7 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
       'message' in response
     ) {
       const extracted = (response as { message?: unknown }).message;
+      console.log('extracted', extracted);
       if (Array.isArray(extracted)) {
         message = extracted.map((msg) => String(msg));
       } else if (extracted) {
