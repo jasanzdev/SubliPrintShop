@@ -4,7 +4,6 @@ import LogoSquare from "../ui/logoSquare";
 import Search from "./search";
 import { ShoppingCartIcon, User } from "lucide-react";
 import React, { useEffect } from "react";
-import AnimatedLine from "../ui/animated-line";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -52,7 +51,7 @@ const Navbar = () => {
                 >
                   <span className="relative text-foreground overflow-hidden">
                     {item.name}
-                    <AnimatedLine scaleTo="100" />
+                    <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"></span>
                   </span>
                 </Link>
               </li>

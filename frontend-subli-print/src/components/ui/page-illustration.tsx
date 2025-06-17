@@ -17,7 +17,8 @@ export default function PageIllustration({
           width={846}
           height={594}
           alt="Page illustration"
-          priority
+          priority={false}
+          loading="lazy"
         />
       </div>
       {multiple && (
@@ -32,7 +33,8 @@ export default function PageIllustration({
               width={760}
               height={668}
               alt="Blurred shape"
-              priority
+              priority={false}
+              loading="lazy"
             />
           </div>
           <div
@@ -45,7 +47,8 @@ export default function PageIllustration({
               width={760}
               height={668}
               alt="Blurred shape"
-              priority
+              priority={false}
+              loading="lazy"
             />
           </div>
         </>

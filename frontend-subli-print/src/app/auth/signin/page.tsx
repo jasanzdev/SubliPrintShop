@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 
 export default function SignIn() {
+  const [error, setError] = useState<string | null>(null);
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -17,9 +18,14 @@ export default function SignIn() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    Login(credentials);
+    const response = await Login(credentials);
+    if (response.success) {
+      window.location.href = "/";
+      return;
+    }
+    setError(response.error?.message || "An error occurred during login.");
   };
 
   return (
@@ -31,6 +37,10 @@ export default function SignIn() {
               Welcome back
             </h1>
           </div>
+          {error && (
+            <div className="mb-4 text-center text-red-500">{error}</div>
+          )}
+          {/* Sign In Form */}
           <form className="mx-auto max-w-[400px]" onSubmit={handleSubmit}>
             <div className="space-y-5">
               <div>

@@ -55,3 +55,9 @@ export type GQLFormattedError = {
   }[];
   statusCode: number;
 };
+
+export type AxiosErrorResponse = {
+  error: string;
+  message: string;
+  statusCode: number;
+};

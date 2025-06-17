@@ -20,10 +20,10 @@ export default function Home() {
       <PageIllustration />
       <Navbar />
       <Suspense>
+        <Gallery />
         <Hero />
       </Suspense>
       <Services />
-      <Gallery />
       <Process />
       <Testimonials />
       <Footer />

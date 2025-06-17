@@ -13,6 +13,8 @@ const Gallery = () => {
               src="/sublimacion.jpg"
               alt="Image with logo name and inputs of sublimation"
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              loading="lazy"
               className="object-cover"
             />
           </div>
@@ -23,6 +25,8 @@ const Gallery = () => {
                   <Image
                     src="/articulos-personalizados-sublimacion.jpg"
                     alt="Image with personalized items"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    loading="lazy"
                     fill
                     className="object-cover"
                   />
@@ -33,6 +37,8 @@ const Gallery = () => {
                   <Image
                     src="/Sublimation-small-format.png"
                     alt="Image with more personalized items"
+                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     fill
                     className="object-cover"
                   />
@@ -54,7 +60,9 @@ const Gallery = () => {
                       src={info.url}
                       alt={info.alt}
                       fill
+                      loading="lazy"
                       className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   </div>
                 ))}

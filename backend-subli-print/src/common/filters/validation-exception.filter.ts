@@ -15,9 +15,14 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
     if (ctxType === 'http') {
       const httpContext = host.switchToHttp();
       const response = httpContext.getResponse<Response>();
+
       const status = exception.getStatus();
 
-      const responseBody = this.getFormattedResponse(exception);
+      const responseBody = {
+        statusCode: status,
+        error: 'Bad Request',
+        message: exception.getResponse(),
+      };
 
       response.status(status).json(responseBody);
       return;
@@ -44,7 +49,6 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
       'message' in response
     ) {
       const extracted = (response as { message?: unknown }).message;
-      console.log('extracted', extracted);
       if (Array.isArray(extracted)) {
         message = extracted.map((msg) => String(msg));
       } else if (extracted) {
