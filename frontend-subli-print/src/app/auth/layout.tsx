@@ -1,4 +1,4 @@
-import PageIllustration from "@/components/ui/page-illustration";
+import PageIllustration from "@/shared/components/page-illustration";
 import { Suspense } from "react";
 
 export default function AuthLayout({

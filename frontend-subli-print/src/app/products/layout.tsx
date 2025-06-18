@@ -1,4 +1,4 @@
-import Navbar from "@/components/layout/navbar/navbar";
+import Navbar from "@/features/core/components/layout/navbar";
 import { Suspense } from "react";
 
 export default function ProductsLayout({

@@ -1,6 +1,6 @@
-import Grid from "@/components/grid";
-import { GridTileImage } from "@/components/grid/tile";
-import { products } from "@/lib/images";
+import Grid from "@/features/core/components/grid";
+import { GridTileImage } from "@/features/core/components/grid/tile";
+import { products } from "@/features/products/lib/images";
 import Link from "next/link";
 
 const ProductsShop = () => {

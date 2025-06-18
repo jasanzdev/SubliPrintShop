@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { AuthContextType, User } from "@/types/types";
+import { AuthContextType, User } from "@/shared/types/types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { FormInput } from "@/components/auth/form-input";
 import { ChangeEvent, useState } from "react";
-import { CreateUserType, GQLFormattedError } from "@/types/types";
-import { CreateUserService } from "@/services/userService";
-import { PasswordInput } from "@/components/auth/password-input";
+import { CreateUserType, GQLFormattedError } from "@/shared/types/types";
+import { CreateUserService } from "@/features/auth/services/userService";
+import { FormInput } from "@/features/auth/components/form-input";
+import { PasswordInput } from "@/features/auth/components/password-input";
 
 export default function SignUp() {
   const [error, setError] = useState<GQLFormattedError["message"]>([]);
