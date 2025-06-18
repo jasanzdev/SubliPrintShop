@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { Login } from "@/features/auth/services/authService";
-import { FormInput } from "./form-input";
-import { PasswordInput } from "./password-input";
+import { FormInput } from "../input";
+import { PasswordInput } from "../password-input";
 
 export function SignInForm() {
   const [error, setError] = useState<string | null>(null);

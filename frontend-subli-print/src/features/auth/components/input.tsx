@@ -1,7 +1,7 @@
 "use client";
 
 import { type ChangeEvent } from "react";
-import { Label } from "./label-input";
+import { Label } from "./label";
 
 interface FormInputProps {
   id: string;

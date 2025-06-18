@@ -3,7 +3,7 @@
 import { type ChangeEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { Label } from "./label-input";
+import { Label } from "./label";
 
 interface PasswordInputProps {
   id: string;

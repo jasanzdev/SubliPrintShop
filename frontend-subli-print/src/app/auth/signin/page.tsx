@@ -1,6 +1,6 @@
 "use client";
 
-import { SignInForm } from "@/features/auth/components/sigin-form";
+import { SignInForm } from "@/features/auth/components/signin/sigin-form";
 import Link from "next/link";
 
 export default function SignIn() {
