@@ -1,6 +1,6 @@
-import { AxiosErrorResponse, Credentials } from "@/shared/types/types";
 import apiRestClient from "@/shared/utils/apiClient";
 import { AxiosError } from "axios";
+import { AxiosErrorResponse, Credentials } from "@/shared/types/types";
 
 export async function Login(credentials: Credentials) {
   try {

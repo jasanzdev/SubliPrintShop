@@ -5,13 +5,9 @@ import Search from "./search";
 import { User } from "lucide-react";
 import LogoSquare from "@/shared/components/logoSquare";
 import CartModal from "@/features/cart/components/cartModal";
+import { menu } from "@/features/core/libs/constants";
 
 export default async function Navbar() {
-  const menu = [
-    { name: "Productos", href: "/products" },
-    { name: "Portafolio", href: "/" },
-    { name: "Cotizar", href: "/" },
-  ];
   return (
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
       <div className="block flex-none md:hidden">

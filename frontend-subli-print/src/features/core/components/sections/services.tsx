@@ -1,6 +1,6 @@
 import React from "react";
 import { MonitorIcon, PaletteIcon, PrinterIcon } from "lucide-react";
-import CardServices from "@/shared/components/card-service";
+import CardServices from "@/features/core/components/card-service";
 
 const Services = () => {
   const description =

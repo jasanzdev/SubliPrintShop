@@ -1,4 +1,4 @@
-import { CreateUser } from "@/features/auth/lib/gql/users-mutations";
+import { CreateUser } from "@/shared/utils/gql/users-mutations";
 import { CreateUserType } from "@/shared/types/types";
 
 export async function CreateUserService(userInput: CreateUserType) {
