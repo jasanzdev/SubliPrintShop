@@ -1,0 +1,6 @@
+npm run lint && npm test
+if [ $? -ne 0 ]; then
+echo "Linting or tests failed. Push aborted."
+exit 1
+fi
+echo "Linting and tests passed. Proceeding with push."
