@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-@import "./additional-styles/utility-patterns.css" layer(components);
-@import "./additional-styles/theme.css";
-
 @plugin "@tailwindcss/forms" {
   strategy: base;
 }
@@ -106,22 +103,63 @@
 }
 
 @layer components {
-  .btn {
-    @apply inline-flex items-center justify-center rounded-md text-sm font-sans font-semibold transition-colors;
-  }
-  .btn-primary {
-    @apply bg-primary-foreground text-primary hover:bg-primary-foreground/50 hover:border-border hover:animate-pulse;
-  }
-  .btn-secondary {
-    @apply bg-secondary/20 text-primary hover:bg-secondary/50 hover:border-border hover:animate-pulse;
-  }
   .animate-bg-color {
     @apply animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text;
   }
-}
+  .btn,
+  .btn-sm {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all;
+  }
 
-body {
-  @apply bg-background text-foreground font-nacelle antialiased;
+  .btn {
+    @apply px-4 py-[11px];
+  }
+
+  .btn-sm {
+    @apply px-3 py-[7px];
+  }
+
+  /* Forms */
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-multiselect,
+  .form-select,
+  .form-checkbox,
+  .form-radio {
+    @apply border border-gray-700 bg-neutral-200 focus:border-gray-600 focus:ring-0 focus:ring-offset-0;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-multiselect,
+  .form-select {
+    @apply rounded-lg px-4 py-2.5 text-sm text-gray-700;
+  }
+
+  .form-input,
+  .form-textarea {
+    @apply placeholder-gray-600;
+  }
+
+  .form-select {
+    @apply pr-10;
+  }
+
+  .form-checkbox,
+  .form-radio {
+    @apply text-indigo-500;
+  }
+
+  .form-checkbox {
+    @apply rounded-xs;
+  }
 }
 
 @keyframes scroll {

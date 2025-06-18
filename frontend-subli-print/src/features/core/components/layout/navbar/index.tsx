@@ -9,7 +9,7 @@ import { menu } from "@/features/core/libs/constants";
 
 export default async function Navbar() {
   return (
-    <nav className="relative flex items-center justify-between p-4 lg:px-6">
+    <nav className="relative flex items-center justify-between p-4 gap-2 lg:px-6">
       <div className="block flex-none md:hidden">
         <MobileMenu />
       </div>
@@ -25,7 +25,7 @@ export default async function Navbar() {
             </div>
           </Link>
           {menu.length ? (
-            <ul className="hidden gap-1 text-sm md:flex md:items-center">
+            <ul className="hidden gap-3 text-sm md:flex md:items-center">
               {menu.map((item) => (
                 <li key={item.name} className="inline-block items-center">
                   <Link

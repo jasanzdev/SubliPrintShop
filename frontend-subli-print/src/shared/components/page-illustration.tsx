@@ -6,28 +6,29 @@ export default function PageIllustration({
   multiple?: boolean;
 }) {
   return (
-    <>
+    <div className="relative flex max-w-screen max-h-screen">
       <div
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 -translate-x-1/4"
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 -translate-x-1/4 max-w-screen"
         aria-hidden="true"
       >
         <Image
-          className="max-w-none"
+          className="max-w-screen"
           src="/page-illustration.svg"
           width={846}
           height={594}
           alt="Page illustration"
-          priority
+          priority={false}
+          loading="lazy"
         />
       </div>
       {multiple && (
         <>
           <div
-            className="pointer-events-none absolute left-1/2 top-[400px] -z-10 -mt-20 -translate-x-full opacity-50"
+            className="pointer-events-none absolute left-1/2 top-[400px] -z-10 -mt-20 -translate-x-full opacity-50 max-w-screen"
             aria-hidden="true"
           >
             <Image
-              className="max-w-none"
+              className="max-w-screen"
               src="/blurred-shape-gray.svg"
               width={760}
               height={668}
@@ -41,7 +42,7 @@ export default function PageIllustration({
             aria-hidden="true"
           >
             <Image
-              className="max-w-none"
+              className="max-w-screen"
               src="/blurred-shape.svg"
               width={760}
               height={668}
@@ -52,6 +53,6 @@ export default function PageIllustration({
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }

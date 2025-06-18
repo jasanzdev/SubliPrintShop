@@ -1,7 +1,6 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
-import { Button } from "./button";
 
 export function WhatsAppFloat() {
   const handleWhatsAppClick = () => {
@@ -15,12 +14,11 @@ export function WhatsAppFloat() {
   };
 
   return (
-    <Button
+    <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-green-500 hover:bg-green-600 shadow-lg"
-      size="sm"
+      className="fixed block bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-green-500 hover:bg-green-600 shadow-lg"
     >
-      <MessageCircle className="w-6 h-6 text-white" />
-    </Button>
+      <MessageCircle className="w-6 h-6 text-white text-center place-self-center" />
+    </button>
   );
 }
