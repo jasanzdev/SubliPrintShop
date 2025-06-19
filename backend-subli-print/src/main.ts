@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { envs } from './core/config/envs';
+import { envs } from './config/envs';
 import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 
