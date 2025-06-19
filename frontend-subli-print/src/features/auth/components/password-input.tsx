@@ -70,6 +70,7 @@ export function PasswordInput({
           required={required}
           minLength={minLength}
           disabled={disabled}
+          pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).+$/"
         />
         <button
           type="button"

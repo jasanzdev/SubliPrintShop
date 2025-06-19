@@ -38,7 +38,7 @@ export async function CreateUser(userInput: CreateUserType) {
       return {
         props: {
           success: false,
-          error: error.graphQLErrors[0]?.extensions
+          axiosError: error.graphQLErrors[0]?.extensions
             ?.message as GQLFormattedError,
         },
       };
@@ -46,7 +46,7 @@ export async function CreateUser(userInput: CreateUserType) {
     return {
       props: {
         success: false,
-        error: {
+        axiosError: {
           error: "An unexpected error occurred",
           message: [
             {

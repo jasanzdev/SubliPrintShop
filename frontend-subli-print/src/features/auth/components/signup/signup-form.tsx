@@ -5,9 +5,9 @@ import { PasswordInput } from "@/features/auth/components/password-input";
 import { FormInput } from "../input";
 
 export function SignUpForm() {
-  const [error, setError] = useState<GQLFormattedError["message"]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState<GQLFormattedError["message"]>([]);
   const [formData, setFormData] = useState<CreateUserType>({
     name: "",
     username: "",
@@ -26,24 +26,27 @@ export function SignUpForm() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData((prev) => {
-      const updatedFormData = { ...prev, [id]: value };
-      return updatedFormData;
-    });
+    const newFormData = { ...formData, [id]: value };
+    setFormData(newFormData);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (error.length > 0) return;
+    if (formData.password !== formData.confirmPassword) {
+      setError((prev) => [
+        ...prev,
+        { field: "confirmPassword", message: "Passwords do not match" },
+      ]);
+      return;
+    }
+    const { axiosError } = await CreateUserService(formData);
 
-    const { user, error } = await CreateUserService(formData);
-    if (error) {
-      setError(error.message);
+    if (axiosError) {
+      setError(axiosError.message);
       return;
     }
 
-    console.log("User created successfully:", user);
-    // Redirect or show success message
-    // For example, you can redirect to the sign-in page:
     window.location.href = "/auth/signin";
   };
 
@@ -54,6 +57,7 @@ export function SignUpForm() {
           id="name"
           name="name"
           type="text"
+          minLength={3}
           error={error?.find((err) => err.field === "name")?.message}
           value={formData.name}
           onChange={handleChange}
@@ -66,6 +70,7 @@ export function SignUpForm() {
           id="username"
           name="username"
           type="text"
+          minLength={3}
           error={error?.find((err) => err.field === "username")?.message}
           value={formData.username}
           onChange={handleChange}
@@ -90,6 +95,7 @@ export function SignUpForm() {
           id="password"
           name="password"
           value={formData.password}
+          minLength={8}
           error={error?.find((err) => err.field === "password")?.message}
           placeholder="Type Password"
           label="Password"

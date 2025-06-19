@@ -57,6 +57,7 @@ export function SignInForm() {
             label="Password"
             forgot
             required
+            minLength={8}
             showPassword={showPassword}
             onChange={handleChange}
             onToggleVisibility={togglePasswordVisibility}
