@@ -3,6 +3,8 @@ import { join } from 'node:path';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { envs } from 'src/config/envs';
+import { GqlContext } from 'src/common/types/types';
 
 @Module({
   imports: [
@@ -10,21 +12,32 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
       driver: ApolloDriver,
       useFactory: (): ApolloDriverConfig => {
         return {
-          introspection: true,
-          graphiql: true,
           autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-          formatError: (error: GraphQLError): GraphQLFormattedError => {
-            if ('formattedError' in error.extensions) {
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              const { stacktrace, code, ...formattedError } = error.extensions;
-              return {
-                message: error.message,
-                extensions: formattedError,
-              };
+          sortSchema: true,
+          includeStacktraceInErrorResponses: envs.nodeEnv === 'development',
+          graphiql: true,
+          csrfPrevention: envs.nodeEnv === 'production',
+          introspection: envs.nodeEnv === 'development',
+          cache: 'bounded',
+          persistedQueries:
+            envs.nodeEnv === 'production' ? { ttl: 3600 } : false,
+          context: ({ req, res }: GqlContext) => {
+            if (res && !res.header) {
+              res.header = () => res;
             }
+
+            req.headers = req.headers || {};
+            req.headers['x-forwarded-for'] =
+              req.headers['x-forwarded-for'] || req.socket?.remoteAddress;
+
+            return { req, res };
+          },
+          formatError: (error: GraphQLError): GraphQLFormattedError => {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { stacktrace, code, ...formattedError } = error.extensions;
             return {
               message: error.message,
-              extensions: error.extensions,
+              extensions: formattedError,
             };
           },
         };

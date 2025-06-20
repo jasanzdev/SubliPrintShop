@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 export type User = {
   id?: string;
   name: string;
@@ -35,4 +37,9 @@ export interface BadRequestResponse {
   error: string;
   message: string[] | string;
   timestamp: string;
+}
+
+export interface GqlContext {
+  req: Request;
+  res: Response;
 }

@@ -36,32 +36,4 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
       },
     });
   }
-
-  private getFormattedResponse(exception: BadRequestException) {
-    const response = exception.getResponse();
-    let message: string[] = ['Bad Request'];
-
-    if (typeof response === 'string') {
-      message = [response];
-    } else if (
-      typeof response === 'object' &&
-      response !== null &&
-      'message' in response
-    ) {
-      const extracted = (response as { message?: unknown }).message;
-      if (Array.isArray(extracted)) {
-        message = extracted.map((msg) => String(msg));
-      } else if (extracted) {
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        message = [String(extracted)];
-      }
-    }
-
-    return {
-      statusCode: exception.getStatus(),
-      error: 'Bad Request',
-      message,
-      timestamp: new Date().toISOString(),
-    };
-  }
 }

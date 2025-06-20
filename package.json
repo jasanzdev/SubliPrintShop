@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@nest-lab/throttler-storage-redis": "^1.1.0",
+    "@nestjs/throttler": "^6.4.0",
+    "cookie-parser": "^1.4.7"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.9"
+  }
+}

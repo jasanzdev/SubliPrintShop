@@ -1,4 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { CreateUserInput } from 'src/users/dto/create-user.input';
@@ -12,6 +13,7 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  @SkipThrottle({ short: true, medium: true })
   @Post('register')
   register(@Body() createUserInput: CreateUserInput) {
     return this.authService.register(createUserInput);

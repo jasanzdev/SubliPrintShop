@@ -2,50 +2,50 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  _id: ID!
-  name: String!
-  username: String!
-  email: String!
-  password: String!
+input CreateUserInput {
   confirmPassword: String!
+  email: String!
+  name: String!
+  password: String!
   role: String
-}
-
-type Query {
-  users: [User!]!
-  user(id: String!): User
+  username: String!
 }
 
 type Mutation {
   createUser(input: CreateUserInput!): User!
-  updateUser(input: UpdateUserInput!): User
-  resetPassword(input: ResetPasswordDto!): User!
   removeUser(id: String!): Boolean!
+  resetPassword(input: ResetPasswordDto!): User!
+  updateUser(input: UpdateUserInput!): User
 }
 
-input CreateUserInput {
-  name: String!
-  username: String!
-  email: String!
-  password: String!
-  confirmPassword: String!
-  role: String
-}
-
-input UpdateUserInput {
-  name: String
-  username: String
-  email: String
-  password: String
-  confirmPassword: String
-  role: String
-  id: ID!
+type Query {
+  user(id: String!): User
+  users: [User!]!
 }
 
 input ResetPasswordDto {
-  username: String!
-  password: String!
-  newPassword: String!
   confirmPassword: String!
+  newPassword: String!
+  password: String!
+  username: String!
+}
+
+input UpdateUserInput {
+  confirmPassword: String
+  email: String
+  id: ID!
+  name: String
+  password: String
+  role: String
+  username: String
+}
+
+type User {
+  _id: ID!
+  confirmPassword: String!
+  email: String!
+  name: String!
+  password: String!
+  role: String
+  username: String!
 }

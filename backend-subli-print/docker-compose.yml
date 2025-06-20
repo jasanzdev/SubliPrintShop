@@ -1,4 +1,14 @@
 services:
+  redis:
+    image: redis:8.0.2-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    networks:
+      - subliprint_network
   mongodb:
     image: mongo:8.0.10-noble
     restart: always
@@ -9,6 +19,9 @@ services:
       - mongo_data:/data/db
     ports:
       - '27017:27017'
+    networks:
+      - subliprint_network
+
   backend:
     image: subli_print:latest
     container_name: subli_print
@@ -22,6 +35,9 @@ services:
       - '${PORT}:${PORT}'
     environment:
       - NODE_ENV=production
+    networks:
+      - subliprint_network
+
   backend-dev:
     image: subli_print_dev:latest
     container_name: subli_print_dev
@@ -50,6 +66,12 @@ services:
       - NODE_ENV=development
     depends_on:
       - mongodb
-
+    networks:
+      - subliprint_network
 volumes:
   mongo_data:
+  redis_data:
+
+networks:
+  subliprint_network:
+    driver: bridge
