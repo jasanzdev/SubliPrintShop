@@ -25,7 +25,7 @@ export const corsOptions: CorsOptions = {
     'Content-Type',
     'Authorization',
     'X-Requested-With',
-    'X-CSRF-Token',
+    'x-csrf-token',
   ],
   preflightContinue: false,
 };

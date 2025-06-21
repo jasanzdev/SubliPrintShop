@@ -4,6 +4,7 @@ export const helmetMiddleware = helmet({
   crossOriginEmbedderPolicy: false,
   contentSecurityPolicy: {
     directives: {
+      defaultSrc: [`'self'`],
       imgSrc: [
         `'self'`,
         'data:',
