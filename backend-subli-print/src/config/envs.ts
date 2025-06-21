@@ -7,6 +7,7 @@ interface EnvVars {
   REDIS_URL: string;
   FRONT_URL: string;
   NODE_ENV?: string;
+  CSRF_SECRET: string;
 }
 
 const envsSchema = joi
@@ -15,6 +16,7 @@ const envsSchema = joi
     MONGO_URL: joi.string().required(),
     REDIS_URL: joi.string().required(),
     FRONT_URL: joi.string().required(),
+    CSRF_SECRET: joi.string().required(),
     NODE_ENV: joi.string().default('development'),
   })
   .unknown(true);
@@ -33,9 +35,6 @@ export const envs = {
   mongoUrl: envVars.MONGO_URL,
   whitelist: [envVars.FRONT_URL],
   redisUrl: envVars.REDIS_URL,
+  csrfSecret: envVars.CSRF_SECRET,
   nodeEnv: envVars.NODE_ENV || 'development',
-  graphqlComplexity: {
-    development: 25,
-    production: 15,
-  },
 };

@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { CreateUserInput } from 'src/users/dto/create-user.input';
+import { CreateUserInput } from 'src/modules/users/dto/create-user.input';
 
 @Controller('auth')
 export class AuthController {
