@@ -17,7 +17,14 @@ export const corsOptions: CorsOptions = {
           return false;
         }
       });
-    return callback(ok ? null : new Error('CORS not allowed'), ok);
+    if (!ok) {
+      if (process.env.NODE_ENV === 'test') {
+        return callback(null, false);
+      }
+      return callback(new Error('CORS not allowed'), false);
+    }
+
+    return callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],

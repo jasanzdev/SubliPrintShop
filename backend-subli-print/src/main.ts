@@ -10,12 +10,15 @@ import { corsOptions } from './bootstrap/cors.config';
 import { csrf } from './bootstrap/csrf.config';
 import { validationGlobalPipes } from './bootstrap/pipes.config';
 import { sessionMiddleware } from './bootstrap/session.middleware';
+import { AllExceptionFilter } from './common/filters/all-exception.filter';
 
 async function bootstrap() {
   const logger = new Logger('App');
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.set('trust proxy', true);
-  app.setGlobalPrefix('/api/sps1');
+  app.setGlobalPrefix('api/sps1');
+
+  app.useGlobalFilters(new AllExceptionFilter());
+  app.useGlobalPipes(validationGlobalPipes);
 
   app.use(helmetMiddleware);
   app.use(cookieParser());
@@ -26,8 +29,6 @@ async function bootstrap() {
   app.enableCors(corsOptions);
   app.use(json({ limit: '10mb' }));
   app.use(urlencoded({ extended: true, limit: '10mb' }));
-
-  app.useGlobalPipes(validationGlobalPipes);
 
   app.use((req: Request, res: Response, next: NextFunction): void => {
     req.headers = req.headers || {};
