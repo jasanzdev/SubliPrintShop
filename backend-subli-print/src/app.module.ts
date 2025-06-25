@@ -10,6 +10,7 @@ import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis'
 import { envs } from './config/envs';
 import { GqlThrottlerGuard } from './common/guard/gql-throttler.guard';
 import { CsrfController } from './csrf/csrf.controller';
+import { AllExceptionFilter } from './common/filters/all-exception.filter';
 
 @Module({
   imports: [
@@ -42,6 +43,10 @@ import { CsrfController } from './csrf/csrf.controller';
   ],
   controllers: [CsrfController],
   providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionFilter,
+    },
     {
       provide: APP_FILTER,
       useClass: BadRequestExceptionFilter,

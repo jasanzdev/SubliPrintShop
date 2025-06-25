@@ -10,21 +10,21 @@ import { corsOptions } from './bootstrap/cors.config';
 import { csrf } from './bootstrap/csrf.config';
 import { validationGlobalPipes } from './bootstrap/pipes.config';
 import { sessionMiddleware } from './bootstrap/session.middleware';
-import { AllExceptionFilter } from './common/filters/all-exception.filter';
+import { SwaggerModule } from '@nestjs/swagger';
+import { swaggerConfig } from './bootstrap/swagger.config';
 
 async function bootstrap() {
   const logger = new Logger('App');
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.setGlobalPrefix('api/sps1');
 
-  app.useGlobalFilters(new AllExceptionFilter());
   app.useGlobalPipes(validationGlobalPipes);
 
   app.use(helmetMiddleware);
   app.use(cookieParser());
 
   app.use(sessionMiddleware);
-  app.use(csrf.doubleCsrfProtection);
+  // app.use(csrf.doubleCsrfProtection);
 
   app.enableCors(corsOptions);
   app.use(json({ limit: '10mb' }));
@@ -34,6 +34,10 @@ async function bootstrap() {
     req.headers = req.headers || {};
     next();
   });
+
+  const documentFactory = () =>
+    SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api-doc', app, documentFactory);
 
   await app.listen(envs.port);
   logger.log(`Application is running on: http://localhost:${envs.port}`);

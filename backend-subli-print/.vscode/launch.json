@@ -5,13 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach to NestJS in Docker",
+      "name": "Attach to NestJS",
       "type": "node",
       "request": "attach",
       "port": 9229,
       "address": "localhost",
       "localRoot": "${workspaceFolder}",
-      "remoteRoot": "/subli-print",
+      "remoteRoot": "/backend-subli-print",
       "restart": true,
       "skipFiles": ["<node_internals>/**"]
     }

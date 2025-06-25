@@ -8,6 +8,7 @@ interface EnvVars {
   FRONT_URL: string;
   NODE_ENV?: string;
   CSRF_SECRET: string;
+  JWT_SECRET: string;
 }
 
 const envsSchema = joi
@@ -17,6 +18,7 @@ const envsSchema = joi
     REDIS_URL: joi.string().required(),
     FRONT_URL: joi.string().required(),
     CSRF_SECRET: joi.string().required(),
+    JWT_SECRET: joi.string().required(),
     NODE_ENV: joi.string().default('development'),
   })
   .unknown(true);
@@ -37,4 +39,5 @@ export const envs = {
   redisUrl: envVars.REDIS_URL,
   csrfSecret: envVars.CSRF_SECRET,
   nodeEnv: envVars.NODE_ENV || 'development',
+  jwtSecret: envVars.JWT_SECRET,
 };

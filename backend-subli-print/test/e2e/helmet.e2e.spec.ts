@@ -3,14 +3,12 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { createTestApp } from '../utils/create-app';
 import { routeTest } from '../utils/constants';
 import { envs } from 'src/config/envs';
-import { helmetMiddleware } from 'src/bootstrap/helmet.config';
 
 describe('Helmet Middleware (e2e)', () => {
   let app: NestExpressApplication;
 
   beforeAll(async () => {
-    app = await createTestApp();
-    app.use(helmetMiddleware);
+    app = await createTestApp({ useCsrf: false });
     envs.whitelist = ['https://myfrontend.com'];
   });
 

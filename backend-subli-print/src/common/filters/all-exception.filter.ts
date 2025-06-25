@@ -5,11 +5,13 @@ import {
   ExceptionFilter,
   Logger,
   HttpStatus,
+  BadRequestException,
 } from '@nestjs/common';
 import { GqlArgumentsHost } from '@nestjs/graphql';
 import { Request, Response } from 'express';
 import { ErrorResponse } from '../interfaces/error-response.interface';
 import { GqlContext } from '../types/types';
+import { envs } from 'src/config/envs';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
@@ -37,9 +39,11 @@ export class AllExceptionFilter implements ExceptionFilter {
       error: typeof message === 'string' ? message : undefined,
     };
 
-    this.logger.error(
-      `[HTTP] ${request.method} ${request.url} → ${JSON.stringify(errorPayload)}`,
-    );
+    if (envs.nodeEnv !== 'test') {
+      this.logger.error(
+        `[HTTP] ${request.method} ${request.url} → ${JSON.stringify(errorPayload)}`,
+      );
+    }
 
     response.status(statusCode).json({
       ...errorPayload,
@@ -55,18 +59,19 @@ export class AllExceptionFilter implements ExceptionFilter {
     const request = ctx.req;
 
     const { statusCode, message } = this.extractStatusAndMessage(exception);
-
     const errorPayload: ErrorResponse = {
       statusCode,
       message,
       error: typeof message === 'string' ? message : undefined,
     };
 
-    this.logger.error(
-      `[GraphQL] ${request?.method || 'QUERY'} ${request?.url || ''} → ${JSON.stringify(
-        errorPayload,
-      )}`,
-    );
+    if (envs.nodeEnv !== 'test') {
+      this.logger.error(
+        `[GraphQL] ${request?.method || 'QUERY'} ${request?.url || ''} → ${JSON.stringify(
+          errorPayload,
+        )}`,
+      );
+    }
 
     return errorPayload;
   }
@@ -75,6 +80,8 @@ export class AllExceptionFilter implements ExceptionFilter {
     statusCode: number;
     message: string | string[];
   } {
+    if (exception instanceof BadRequestException) throw exception;
+
     if (exception instanceof HttpException) {
       const statusCode = exception.getStatus();
 
@@ -94,9 +101,14 @@ export class AllExceptionFilter implements ExceptionFilter {
       };
     }
 
-    return {
-      statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: 'Internal server error',
-    };
+    return exception instanceof Error
+      ? {
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: exception.message,
+        }
+      : {
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Internal server error',
+        };
   }
 }

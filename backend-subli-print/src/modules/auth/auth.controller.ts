@@ -1,21 +1,25 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { SkipThrottle } from '@nestjs/throttler';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { CreateUserInput } from 'src/modules/users/dto/create-user.input';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @HttpCode(200)
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
-  }
+  async login(@Body() loginDto: LoginDto) {
+    const user = await this.authService.validateUser(loginDto);
 
-  @SkipThrottle({ short: true, medium: true })
-  @Post('register')
-  register(@Body() createUserInput: CreateUserInput) {
-    return this.authService.register(createUserInput);
+    if (!user)
+      throw new UnauthorizedException('Please, check your credentials');
+
+    return this.authService.login(user);
   }
 }

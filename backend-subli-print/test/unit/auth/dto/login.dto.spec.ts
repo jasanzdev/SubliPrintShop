@@ -17,7 +17,7 @@ describe('LoginDTO', () => {
 
   it('should not validate whit invalid email', async () => {
     dto.email = 'jasanz@gmail';
-    dto.password = 'J4s4nz';
+    dto.password = 'J4s4nz@324';
     const errors = await validate(dto);
     expect(errors.length).toBeGreaterThanOrEqual(1);
     errors.forEach((error) => {

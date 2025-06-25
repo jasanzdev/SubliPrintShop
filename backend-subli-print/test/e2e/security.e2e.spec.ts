@@ -9,7 +9,7 @@ describe('CORS and CSRF E2E', () => {
   envs.whitelist = ['https://myfrontend.com'];
 
   beforeAll(async () => {
-    app = await createTestApp();
+    app = await createTestApp({ useCsrf: true });
   });
 
   it('should return a CSRF token and set the sessionId cookie.', async () => {

@@ -18,7 +18,7 @@ export const corsOptions: CorsOptions = {
         }
       });
     if (!ok) {
-      if (process.env.NODE_ENV === 'test') {
+      if (envs.nodeEnv === 'test') {
         return callback(null, false);
       }
       return callback(new Error('CORS not allowed'), false);
