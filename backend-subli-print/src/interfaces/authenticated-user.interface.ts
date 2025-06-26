@@ -1,9 +1,5 @@
-import { Role } from 'src/common/enums/roles';
+import { JwtPayload } from 'src/modules/auth/interfaces/interfaces';
 
 export interface AuthenticatedRequest extends Request {
-  user: {
-    userId: string;
-    email: string;
-    role: Role;
-  };
+  user: JwtPayload;
 }

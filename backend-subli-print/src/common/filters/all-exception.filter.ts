@@ -12,6 +12,7 @@ import { Request, Response } from 'express';
 import { ErrorResponse } from '../interfaces/error-response.interface';
 import { GqlContext } from '../types/types';
 import { envs } from 'src/config/envs';
+import { GraphQLError } from 'graphql';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
@@ -73,7 +74,11 @@ export class AllExceptionFilter implements ExceptionFilter {
       );
     }
 
-    return errorPayload;
+    throw new GraphQLError('Exception Error', {
+      extensions: {
+        ...errorPayload,
+      },
+    });
   }
 
   private extractStatusAndMessage(exception: unknown): {

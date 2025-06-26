@@ -14,6 +14,7 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(BadRequestExceptionFilter.name);
   catch(exception: BadRequestException, host: ArgumentsHost) {
     const ctxType = host.getType();
+
     if (ctxType === 'http') {
       const httpContext = host.switchToHttp();
       const response = httpContext.getResponse<Response>();

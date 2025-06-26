@@ -4,10 +4,12 @@ import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import ResetPasswordDto from './dto/reset-pass.input';
+import { Request } from 'express';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { GqlJwtAuthGuard } from '../auth/guards/gql-jwt-auth.guard';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { JwtPayload } from '../auth/interfaces/interfaces';
 
-@UseGuards(JwtAuthGuard)
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
@@ -40,5 +42,11 @@ export class UsersResolver {
   @Mutation(() => Boolean)
   removeUser(@Args('id', { type: () => String }) id: string) {
     return this.usersService.remove(id);
+  }
+
+  @Query(() => User)
+  @UseGuards(GqlJwtAuthGuard)
+  me(@CurrentUser() user: JwtPayload) {
+    return user;
   }
 }

@@ -1,14 +1,5 @@
 import { Request, Response } from 'express';
 
-export type User = {
-  id?: string;
-  name: string;
-  password: string;
-  email: string;
-  phone: string;
-  role: string;
-};
-
 export type Product = {
   id?: string;
   name: string;
