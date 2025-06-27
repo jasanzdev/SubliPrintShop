@@ -1,6 +1,4 @@
-import { Request, Response } from 'express';
-
-export type Product = {
+export interface Product {
   id?: string;
   name: string;
   description: string;
@@ -9,9 +7,9 @@ export type Product = {
   price: number;
   image: string;
   availableForSale: boolean;
-};
+}
 
-export type ProductVariant = {
+export interface ProductVariant {
   parentId?: string;
   id: string;
   title: string;
@@ -21,16 +19,4 @@ export type ProductVariant = {
     value: string;
   }[];
   price: number;
-};
-
-export interface BadRequestResponse {
-  statusCode: number;
-  error: string;
-  message: string[] | string;
-  timestamp: string;
-}
-
-export interface GqlContext {
-  req: Request;
-  res: Response;
 }

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Role } from 'src/common/enums/roles';
+import { AuthProvider } from 'src/common/constants/auth-provider';
+import { Role } from 'src/common/constants/roles.';
 
 @Schema({
   toObject: {
@@ -13,20 +14,29 @@ import { Role } from 'src/common/enums/roles';
   timestamps: true,
 })
 export class User extends Document {
-  @Prop({ type: String, required: true })
+  @Prop()
   name: string;
 
   @Prop({ type: String, required: true, unique: true })
   username: string;
 
-  @Prop({ type: String, required: true, unique: true })
+  @Prop({ type: String, required: true, unique: true, index: true })
   email: string;
 
-  @Prop({ type: String, required: true })
-  password: string;
+  @Prop()
+  password?: string;
 
   @Prop({ type: String, default: 'CLIENT' })
   role: Role;
+
+  @Prop()
+  googleId?: string;
+
+  @Prop()
+  avatar?: string;
+
+  @Prop({ default: 'local' })
+  provider: AuthProvider;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

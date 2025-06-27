@@ -1,6 +1,6 @@
-import { corsOptions } from 'src/bootstrap/cors.config';
 import { envs } from 'src/config/envs';
 import { invalidOrigin, validOrigin } from '../../utils/constants';
+import { corsOptions } from 'src/config/cors.config';
 
 describe('corsOptions', () => {
   const defaultCallback = jest.fn();

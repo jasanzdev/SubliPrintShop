@@ -8,7 +8,12 @@ interface EnvVars {
   FRONT_URL: string;
   NODE_ENV?: string;
   CSRF_SECRET: string;
-  JWT_SECRET: string;
+  JWT_ACCESS_SECRET: string;
+  JWT_REFRESH_SECRET: string;
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
+  GOOGLE_CALLBACK_URI: string;
+  FRONTEND_CALLBACK_URI: string;
 }
 
 const envsSchema = joi
@@ -18,7 +23,12 @@ const envsSchema = joi
     REDIS_URL: joi.string().required(),
     FRONT_URL: joi.string().required(),
     CSRF_SECRET: joi.string().required(),
-    JWT_SECRET: joi.string().required(),
+    JWT_ACCESS_SECRET: joi.string().required(),
+    JWT_REFRESH_SECRET: joi.string().required(),
+    GOOGLE_CLIENT_ID: joi.string().required(),
+    GOOGLE_CLIENT_SECRET: joi.string().required(),
+    GOOGLE_CALLBACK_URI: joi.string().required(),
+    FRONTEND_CALLBACK_URI: joi.string().required(),
     NODE_ENV: joi.string().default('development'),
   })
   .unknown(true);
@@ -39,5 +49,10 @@ export const envs = {
   redisUrl: envVars.REDIS_URL,
   csrfSecret: envVars.CSRF_SECRET,
   nodeEnv: envVars.NODE_ENV || 'development',
-  jwtSecret: envVars.JWT_SECRET,
+  jwtAccessSecret: envVars.JWT_ACCESS_SECRET,
+  jwtRefreshSecret: envVars.JWT_REFRESH_SECRET,
+  googleId: envVars.GOOGLE_CLIENT_ID,
+  googleSecret: envVars.GOOGLE_CLIENT_SECRET,
+  googleRedirectUri: envVars.GOOGLE_CALLBACK_URI,
+  frontendRedirectUri: envVars.FRONTEND_CALLBACK_URI,
 };

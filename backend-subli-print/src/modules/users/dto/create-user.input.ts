@@ -36,4 +36,6 @@ export class CreateUserInput {
   @Field({ nullable: true })
   @IsValidRole()
   role?: string;
+
+  provider?: 'local';
 }

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import { envs } from '../config/envs';
+import { envs } from '../../config/envs';
 
 export function sessionMiddleware(
   req: Request,

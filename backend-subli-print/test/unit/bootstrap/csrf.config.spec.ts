@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { csrfUtils } from 'src/bootstrap/csrf.config';
+import { csrfUtils } from 'src/config/csrf.config';
 
 describe('CSRF Config', () => {
   describe('getSessionIdentifier()', () => {

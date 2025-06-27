@@ -10,9 +10,9 @@ import {
 import { GqlArgumentsHost } from '@nestjs/graphql';
 import { Request, Response } from 'express';
 import { ErrorResponse } from '../interfaces/error-response.interface';
-import { GqlContext } from '../types/types';
 import { envs } from 'src/config/envs';
 import { GraphQLError } from 'graphql';
+import { GqlContext } from '../interfaces/context.interface';
 
 @Catch()
 export class AllExceptionFilter implements ExceptionFilter {
@@ -36,8 +36,8 @@ export class AllExceptionFilter implements ExceptionFilter {
 
     const errorPayload: ErrorResponse = {
       statusCode,
-      message,
       error: typeof message === 'string' ? message : undefined,
+      message,
     };
 
     if (envs.nodeEnv !== 'test') {
@@ -48,7 +48,6 @@ export class AllExceptionFilter implements ExceptionFilter {
 
     response.status(statusCode).json({
       ...errorPayload,
-      timestamp: new Date().toISOString(),
       path: request.url,
       method: request.method,
     });

@@ -3,7 +3,7 @@ import {
   ValidationArguments,
   ValidationOptions,
 } from 'class-validator';
-import { Roles } from '../enums/roles';
+import { Roles } from '../constants/roles.';
 
 export function IsValidRole(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string | symbol) {

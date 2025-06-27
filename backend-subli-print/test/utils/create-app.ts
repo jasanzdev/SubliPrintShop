@@ -3,11 +3,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from 'src/app.module';
 import * as cookieParser from 'cookie-parser';
 import { json, urlencoded } from 'express';
-import { sessionMiddleware } from 'src/bootstrap/session.middleware';
-import { helmetMiddleware } from 'src/bootstrap/helmet.config';
-import { corsOptions } from 'src/bootstrap/cors.config';
-import { csrf } from 'src/bootstrap/csrf.config';
-import { validationGlobalPipes } from 'src/bootstrap/pipes.config';
+import { validationGlobalPipes } from 'src/config/pipes.config';
+import { helmetMiddleware } from 'src/config/helmet.config';
+import { csrf } from 'src/config/csrf.config';
+import { sessionMiddleware } from 'src/common/middlewares/session.middleware';
+import { corsOptions } from 'src/config/cors.config';
 
 interface AppProps {
   useCsrf?: boolean;

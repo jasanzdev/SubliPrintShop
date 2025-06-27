@@ -10,17 +10,21 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import ResetPasswordDto from './dto/reset-pass.input';
 import { User } from './schemas/user.schema';
+import { GoogleProfile } from 'src/common/interfaces/user.interface';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  async create(input: CreateUserInput): Promise<User> {
-    const hashedPassword = await bcrypt.hash(input.password, 10);
-    const newUser = new this.userModel({
-      ...input,
-      password: hashedPassword,
-    });
+  async create(data: CreateUserInput | GoogleProfile): Promise<User> {
+    const newUser = new this.userModel({ ...data });
+    if (data?.provider && data.provider !== 'google') {
+      const hashedPassword = await bcrypt.hash(data.password, 10);
+      newUser.provider = 'local';
+      newUser.password = hashedPassword;
+      return newUser.save();
+    }
+
     return newUser.save();
   }
 
@@ -42,7 +46,7 @@ export class UsersService {
     const { username, password, newPassword } = input;
     const user = await this.findOne({ username: username });
     if (!user) throw new NotFoundException('User does not exists');
-    const isValidPass = await bcrypt.compare(password, user.password);
+    const isValidPass = await bcrypt.compare(password, user.password as string);
     if (!isValidPass) throw new BadGatewayException('Invalid Password');
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     return this.userModel

@@ -1,6 +1,6 @@
 import { doubleCsrf } from 'csrf-csrf';
 import type { Request } from 'express';
-import { envs } from '../config/envs';
+import { envs } from './envs';
 
 const getSessionIdentifier = (req: Request): string => {
   const cookies = req.cookies as Record<string, unknown>;

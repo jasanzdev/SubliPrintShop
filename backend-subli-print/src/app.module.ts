@@ -2,15 +2,15 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule, minutes, seconds } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
-import { UsersModule } from './modules/users/users.module';
-import { MongodbModule } from './modules/mongodb/mongodb.module';
-import { GraphqlModule } from './modules/graphql/graphql.module';
+import { MongodbModule } from './mongodb/mongodb.module';
+import { GraphqlModule } from './graphql/graphql.module';
 import { BadRequestExceptionFilter } from './common/filters/validation-exception.filter';
 import { ThrottlerStorageRedisService } from '@nest-lab/throttler-storage-redis';
 import { envs } from './config/envs';
-import { GqlThrottlerGuard } from './common/guard/gql-throttler.guard';
+import { GqlThrottlerGuard } from './common/guards/gql-throttler.guard';
 import { CsrfController } from './csrf/csrf.controller';
 import { AllExceptionFilter } from './common/filters/all-exception.filter';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [

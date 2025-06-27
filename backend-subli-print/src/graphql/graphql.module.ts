@@ -4,7 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { envs } from 'src/config/envs';
-import { GqlContext } from 'src/common/types/types';
+import { GqlContext } from 'src/common/interfaces/context.interface';
 
 @Module({
   imports: [

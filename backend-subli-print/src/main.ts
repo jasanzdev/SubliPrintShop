@@ -5,13 +5,13 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cookieParser from 'cookie-parser';
 import { envs } from './config/envs';
 import { AppModule } from './app.module';
-import { helmetMiddleware } from './bootstrap/helmet.config';
-import { corsOptions } from './bootstrap/cors.config';
-import { csrf } from './bootstrap/csrf.config';
-import { validationGlobalPipes } from './bootstrap/pipes.config';
-import { sessionMiddleware } from './bootstrap/session.middleware';
 import { SwaggerModule } from '@nestjs/swagger';
-import { swaggerConfig } from './bootstrap/swagger.config';
+import { validationGlobalPipes } from './config/pipes.config';
+import { helmetMiddleware } from './config/helmet.config';
+import { sessionMiddleware } from './common/middlewares/session.middleware';
+import { corsOptions } from './config/cors.config';
+import { swaggerConfig } from './config/swagger.config';
+import { csrf } from './config/csrf.config';
 
 async function bootstrap() {
   const logger = new Logger('App');
@@ -24,7 +24,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.use(sessionMiddleware);
-  // app.use(csrf.doubleCsrfProtection);
+  app.use(csrf.doubleCsrfProtection);
 
   app.enableCors(corsOptions);
   app.use(json({ limit: '10mb' }));

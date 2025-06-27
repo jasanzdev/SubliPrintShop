@@ -45,8 +45,8 @@ export class BadRequestExceptionFilter implements ExceptionFilter {
     throw new GraphQLError('Validation Error', {
       extensions: {
         statusCode: exception.getStatus(),
-        responseData: exception.getResponse(),
         error: 'Bad Request',
+        responseData: exception.getResponse(),
       },
     });
   }
