@@ -14,7 +14,7 @@ input CreateUserInput {
 type Mutation {
   createUser(input: CreateUserInput!): User!
   removeUser(id: String!): Boolean!
-  resetPassword(input: ResetPasswordDto!): User!
+  resetPassword(input: ResetPasswordInput!): User!
   updateUser(input: UpdateUserInput!): User
 }
 
@@ -24,7 +24,7 @@ type Query {
   users: [User!]!
 }
 
-input ResetPasswordDto {
+input ResetPasswordInput {
   confirmPassword: String!
   newPassword: String!
   password: String!

@@ -3,11 +3,11 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import ResetPasswordDto from './dto/reset-pass.input';
 import { UseGuards } from '@nestjs/common';
 import { GetUser } from 'src/common/decorators/get-user.decorator';
 import { UserPlainObject } from 'src/common/interfaces/user.interface';
 import { GqlJwtAuthGuard } from '../auth/guards/gql-jwt-auth.guard';
+import { ResetPasswordInput } from './dto/reset-pass.input';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -34,7 +34,7 @@ export class UsersResolver {
   }
 
   @Mutation(() => User)
-  resetPassword(@Args('input') input: ResetPasswordDto) {
+  resetPassword(@Args('input') input: ResetPasswordInput) {
     return this.usersService.resetPassword(input);
   }
 

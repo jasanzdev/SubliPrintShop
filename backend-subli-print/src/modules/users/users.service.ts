@@ -8,9 +8,9 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import ResetPasswordDto from './dto/reset-pass.input';
 import { User } from './schemas/user.schema';
 import { GoogleProfile } from 'src/common/interfaces/user.interface';
+import { ResetPasswordInput } from './dto/reset-pass.input';
 
 @Injectable()
 export class UsersService {
@@ -42,7 +42,7 @@ export class UsersService {
       .exec();
   }
 
-  async resetPassword(input: ResetPasswordDto) {
+  async resetPassword(input: ResetPasswordInput) {
     const { username, password, newPassword } = input;
     const user = await this.findOne({ username: username });
     if (!user) throw new NotFoundException('User does not exists');

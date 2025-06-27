@@ -4,13 +4,18 @@ import { Match } from 'src/common/decorators/match.decorator';
 import { NotMatch } from 'src/common/decorators/no-match.decorator';
 
 @InputType()
-export default class ResetPasswordDto {
+export class ResetPasswordInput {
   @Field()
   @IsNotEmpty()
   username: string;
 
   @Field()
   @IsNotEmpty()
+  @MinLength(8)
+  @Matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).+$/, {
+    message:
+      'Password must be at least 8 characters long, include uppercase, lowercase, number, and special character',
+  })
   password: string;
 
   @Field()
