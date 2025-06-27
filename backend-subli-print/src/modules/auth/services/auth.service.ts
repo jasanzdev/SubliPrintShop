@@ -60,25 +60,6 @@ export class AuthService {
     });
   }
 
-  refreshToken(token: string) {
-    try {
-      const payload: AccessPayload = this.jwtService.verify(token);
-      return this.generateTokens(payload);
-    } catch {
-      throw new UnauthorizedException('Refresh token is invalid or expired');
-    }
-  }
-
-  login(user: UserPlainObject) {
-    const accessPayload: AccessPayload = {
-      sub: user._id,
-      email: user.email,
-      role: user.role,
-    };
-
-    return this.generateTokens(accessPayload);
-  }
-
   generateTokens(payload: AccessPayload) {
     const { sub, email, role } = payload;
     const newAccessToken = this.jwtService.sign(
