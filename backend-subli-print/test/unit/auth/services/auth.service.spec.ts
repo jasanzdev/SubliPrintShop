@@ -1,4 +1,3 @@
-import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from 'src/modules/auth/services/auth.service';
 import { UsersService } from 'src/modules/users/users.service';
@@ -10,14 +9,12 @@ import {
 import * as bcrypt from 'bcrypt';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { mockProfile } from '../../mocks/google-profile';
-import { AccessPayload } from 'src/common/interfaces/payloads.interface';
 
 jest.mock('bcrypt');
 
 describe('AuthService', () => {
   let service: AuthService;
   let userService: jest.Mocked<UsersService>;
-  let jwtService: jest.Mocked<JwtService>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -30,19 +27,11 @@ describe('AuthService', () => {
             create: jest.fn(),
           },
         },
-        {
-          provide: JwtService,
-          useValue: {
-            sign: jest.fn(),
-            verify: jest.fn(),
-          },
-        },
       ],
     }).compile();
 
     service = module.get(AuthService);
     userService = module.get(UsersService);
-    jwtService = module.get(JwtService);
   });
 
   describe('Validate User', () => {
@@ -119,26 +108,6 @@ describe('AuthService', () => {
         username: 'test',
         avatar: 'photo-url',
         provider: 'google',
-      });
-    });
-  });
-
-  describe('generateTokens', () => {
-    it('Should return tokens with user payload', () => {
-      const mockPayload: AccessPayload = {
-        sub: '123',
-        email: 'test@example.com',
-        role: 'CLIENT',
-      };
-
-      jwtService.sign
-        .mockReturnValueOnce('access-token')
-        .mockReturnValueOnce('refresh-token');
-
-      const result = service.generateTokens(mockPayload);
-      expect(result).toEqual({
-        access_token: 'access-token',
-        refresh_token: 'refresh-token',
       });
     });
   });

@@ -5,19 +5,14 @@ import {
 } from '@nestjs/common';
 import { UsersService } from 'src/modules/users/users.service';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
 import { Profile } from 'passport-google-oauth20';
-import { AccessPayload } from 'src/common/interfaces/payloads.interface';
 import { User } from 'src/modules/users/schemas/user.schema';
 import { UserPlainObject } from 'src/common/interfaces/user.interface';
 import { LoginDto } from '../dto/login.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UsersService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly userService: UsersService) {}
 
   async validateUser(credentials: LoginDto): Promise<UserPlainObject> {
     const user = await this.userService.findOne({ email: credentials.email });
@@ -58,23 +53,5 @@ export class AuthService {
       avatar: profile.photos?.[0]?.value,
       provider: 'google',
     });
-  }
-
-  generateTokens(payload: AccessPayload) {
-    const { sub, email, role } = payload;
-    const newAccessToken = this.jwtService.sign(
-      { sub, email, role },
-      { expiresIn: '15m' },
-    );
-
-    const newRefreshToken = this.jwtService.sign(
-      { email: email },
-      { expiresIn: '7d' },
-    );
-
-    return {
-      access_token: newAccessToken,
-      refresh_token: newRefreshToken,
-    };
   }
 }
