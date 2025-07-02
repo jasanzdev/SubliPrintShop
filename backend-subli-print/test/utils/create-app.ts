@@ -1,13 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { AppModule } from 'src/app.module';
+import { AuthGuard } from '@nestjs/passport';
 import * as cookieParser from 'cookie-parser';
 import { json, urlencoded } from 'express';
+import { AppModule } from 'src/app.module';
 import { validationGlobalPipes } from 'src/config/pipes.config';
 import { helmetMiddleware } from 'src/config/helmet.config';
 import { csrf } from 'src/config/csrf.config';
 import { sessionMiddleware } from 'src/common/middlewares/session.middleware';
 import { corsOptions } from 'src/config/cors.config';
+import { MockGoogleAuthGuard } from './test-app.factory';
 
 interface AppProps {
   useCsrf?: boolean;
@@ -18,7 +20,10 @@ export async function createTestApp({
 }: AppProps): Promise<NestExpressApplication> {
   const moduleRef: TestingModule = await Test.createTestingModule({
     imports: [AppModule],
-  }).compile();
+  })
+    .overrideGuard(AuthGuard('google'))
+    .useClass(MockGoogleAuthGuard)
+    .compile();
 
   const app = moduleRef.createNestApplication<NestExpressApplication>();
   app.setGlobalPrefix('api/sps1');

@@ -1,6 +1,6 @@
 import { Request, NextFunction, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import { createMockResponse } from '../mocks/mock-response';
+import { createMockResponse } from '../../utils/mock-response';
 import { sessionMiddleware } from 'src/common/middlewares/session.middleware';
 
 jest.mock('uuid');

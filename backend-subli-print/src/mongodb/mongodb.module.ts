@@ -5,7 +5,7 @@ import { envs } from 'src/config/envs';
 @Module({
   imports: [
     MongooseModule.forRoot(envs.mongoUrl, {
-      dbName: 'print-studio',
+      dbName: envs.nodeEnv === 'test' ? 'print-studio-test' : 'print-studio',
       authSource: 'admin',
     }),
   ],

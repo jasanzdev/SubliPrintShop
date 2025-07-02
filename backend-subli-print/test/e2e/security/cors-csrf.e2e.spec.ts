@@ -1,8 +1,8 @@
 import * as request from 'supertest';
-import { createTestApp } from '../utils/create-app';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { invalidOrigin, routeTest, validOrigin } from '../utils/constants';
+import { csrfRoute, invalidOrigin, validOrigin } from '../../utils/constants';
 import { envs } from 'src/config/envs';
+import { createTestApp } from '../../utils/create-app';
 
 describe('CORS and CSRF E2E', () => {
   let app: NestExpressApplication;
@@ -14,7 +14,7 @@ describe('CORS and CSRF E2E', () => {
 
   it('should return a CSRF token and set the sessionId cookie.', async () => {
     const res = await request(app.getHttpServer())
-      .get(routeTest)
+      .get(csrfRoute)
       .set('Origin', validOrigin);
 
     expect(res.status).toBe(200);
@@ -33,7 +33,7 @@ describe('CORS and CSRF E2E', () => {
 
   it('should reject not allowed origin by CORS', async () => {
     const res = await request(app.getHttpServer())
-      .get(routeTest)
+      .get(csrfRoute)
       .set('Origin', invalidOrigin);
 
     expect(res.headers['access-control-allow-origin']).toBeUndefined();

@@ -5,10 +5,10 @@ import {
   mockUser,
   mockUserGoogleProfile,
   mockUserWithoutPass,
-} from '../../mocks/user';
+  mockProfile,
+} from '../../../utils/constants';
 import * as bcrypt from 'bcrypt';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
-import { mockProfile } from '../../mocks/google-profile';
 
 jest.mock('bcrypt');
 

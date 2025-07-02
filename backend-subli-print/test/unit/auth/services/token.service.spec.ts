@@ -5,7 +5,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
 import { RefreshToken } from 'src/modules/auth/schemas/refresh-token.schema';
 import { TokenService } from 'src/modules/auth/services/token.service';
-import { mockRefreshToken } from '../../mocks/refresh-token-model';
+import { mockRefreshToken } from '../../../utils/constants';
 import { AccessPayload } from 'src/common/interfaces/payloads.interface';
 import { envs } from 'src/config/envs';
 

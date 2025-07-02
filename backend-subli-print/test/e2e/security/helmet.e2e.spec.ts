@@ -1,8 +1,8 @@
 import * as request from 'supertest';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { createTestApp } from '../utils/create-app';
-import { routeTest } from '../utils/constants';
+import { csrfRoute } from '../../utils/constants';
 import { envs } from 'src/config/envs';
+import { createTestApp } from '../../utils/create-app';
 
 describe('Helmet Middleware (e2e)', () => {
   let app: NestExpressApplication;
@@ -14,7 +14,7 @@ describe('Helmet Middleware (e2e)', () => {
 
   it('should have the security headers established by helmet', async () => {
     const res = await request(app.getHttpServer())
-      .get(routeTest)
+      .get(csrfRoute)
       .set('Cross-Origin-Opener-Policy', 'same-origin');
 
     expect(res.headers['x-dns-prefetch-control']).toBe('off');
