@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/25</span>
+                <span class='fraction'>0/26</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/19</span>
+                <span class='fraction'>0/20</span>
             </div>
         
             
@@ -117,7 +117,12 @@
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -133,25 +138,19 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,10 +166,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 var __decorate = <span class="cstat-no" title="statement not covered" >(this &amp;&amp; this.__decorate) || <span class="fstat-no" title="function not covered" >fu</span>nction (decorators, target, key, desc) {</span>
     var c = <span class="cstat-no" title="statement not covered" >arguments.length,</span> r = <span class="cstat-no" title="statement not covered" >c &lt; 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,</span> d;
@@ -182,26 +192,32 @@ var __metadata = <span class="cstat-no" title="statement not covered" >(this &am
 <span class="cstat-no" title="statement not covered" >    if (typeof Reflect === "object" &amp;&amp; typeof Reflect.metadata === "function") <span class="cstat-no" title="statement not covered" >return Reflect.metadata(k, v);</span></span>
 };
 <span class="cstat-no" title="statement not covered" >Object.defineProperty(exports, "__esModule", { value: true });</span>
+<span class="cstat-no" title="statement not covered" >exports.ResetPasswordInput = void 0;</span>
 const graphql_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/graphql");</span>
 const class_validator_1 = <span class="cstat-no" title="statement not covered" >require("class-validator");</span>
 const match_decorator_1 = <span class="cstat-no" title="statement not covered" >require("../../../common/decorators/match.decorator");</span>
 const no_match_decorator_1 = <span class="cstat-no" title="statement not covered" >require("../../../common/decorators/no-match.decorator");</span>
-let ResetPasswordDto = <span class="cstat-no" title="statement not covered" >class ResetPasswordDto {</span>
+let ResetPasswordInput = <span class="cstat-no" title="statement not covered" >class ResetPasswordInput {</span>
     username;
     password;
     newPassword;
     confirmPassword;
 };
+<span class="cstat-no" title="statement not covered" >exports.ResetPasswordInput = ResetPasswordInput;</span>
 <span class="cstat-no" title="statement not covered" >__decorate([</span>
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], ResetPasswordDto.prototype, "username", void 0);
+], ResetPasswordInput.prototype, "username", void 0);
 <span class="cstat-no" title="statement not covered" >__decorate([</span>
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MinLength)(8),
+    (0, class_validator_1.Matches)(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&amp;*]).+$/, {
+        message: 'Password must be at least 8 characters long, include uppercase, lowercase, number, and special character',
+    }),
     __metadata("design:type", String)
-], ResetPasswordDto.prototype, "password", void 0);
+], ResetPasswordInput.prototype, "password", void 0);
 <span class="cstat-no" title="statement not covered" >__decorate([</span>
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
@@ -213,18 +229,17 @@ let ResetPasswordDto = <span class="cstat-no" title="statement not covered" >cla
         message: 'Password must be at least 8 characters long, include uppercase, lowercase, number, and special character',
     }),
     __metadata("design:type", String)
-], ResetPasswordDto.prototype, "newPassword", void 0);
+], ResetPasswordInput.prototype, "newPassword", void 0);
 <span class="cstat-no" title="statement not covered" >__decorate([</span>
     (0, graphql_1.Field)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(6),
     (0, match_decorator_1.Match)('newPassword', { message: 'Passwords do not match' }),
     __metadata("design:type", String)
-], ResetPasswordDto.prototype, "confirmPassword", void 0);
-<span class="cstat-no" title="statement not covered" >ResetPasswordDto = __decorate([</span>
+], ResetPasswordInput.prototype, "confirmPassword", void 0);
+<span class="cstat-no" title="statement not covered" >exports.ResetPasswordInput = ResetPasswordInput = __decorate([</span>
     (0, graphql_1.InputType)()
-], ResetPasswordDto);
-<span class="cstat-no" title="statement not covered" >exports.default = ResetPasswordDto;</span>
+], ResetPasswordInput);
 //# sourceMappingURL=reset-pass.input.js.map</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -232,7 +247,7 @@ let ResetPasswordDto = <span class="cstat-no" title="statement not covered" >cla
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-23T19:46:41.281Z
+                at 2025-07-02T19:35:21.994Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

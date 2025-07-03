@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/44</span>
+                <span class='fraction'>0/48</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/36</span>
+                <span class='fraction'>0/40</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/37</span>
+                <span class='fraction'>0/41</span>
             </div>
         
             
@@ -133,7 +133,9 @@
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -161,8 +163,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -222,27 +226,29 @@ const bcrypt = <span class="cstat-no" title="statement not covered" >require("bc
 const common_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/common");</span>
 const mongoose_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/mongoose");</span>
 const mongoose_2 = <span class="cstat-no" title="statement not covered" >require("mongoose");</span>
-const user_entity_1 = <span class="cstat-no" title="statement not covered" >require("./entities/user.entity");</span>
+const user_schema_1 = <span class="cstat-no" title="statement not covered" >require("./schemas/user.schema");</span>
 let UsersService = <span class="cstat-no" title="statement not covered" >class UsersService {</span>
     userModel;
 <span class="fstat-no" title="function not covered" >    co</span>nstructor(userModel) {
 <span class="cstat-no" title="statement not covered" >        this.userModel = userModel;</span>
     }
-<span class="fstat-no" title="function not covered" >    as</span>ync create(input) {
-        const hashedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(input.password, 10);</span>
-        const newUser = <span class="cstat-no" title="statement not covered" >new this.userModel({</span>
-            ...input,
-            password: hashedPassword,
-        });
+<span class="fstat-no" title="function not covered" >    as</span>ync create(data) {
+        const newUser = <span class="cstat-no" title="statement not covered" >new this.userModel({ ...data });</span>
+<span class="cstat-no" title="statement not covered" >        if (data?.provider &amp;&amp; data.provider !== 'google') {</span>
+            const hashedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(data.password, 10);</span>
+<span class="cstat-no" title="statement not covered" >            newUser.provider = 'local';</span>
+<span class="cstat-no" title="statement not covered" >            newUser.password = hashedPassword;</span>
+<span class="cstat-no" title="statement not covered" >            return newUser.save();</span>
+        }
 <span class="cstat-no" title="statement not covered" >        return newUser.save();</span>
     }
-<span class="fstat-no" title="function not covered" >    as</span>ync findAll() {
+<span class="fstat-no" title="function not covered" >    fi</span>ndAll() {
 <span class="cstat-no" title="statement not covered" >        return this.userModel.find().exec();</span>
     }
-<span class="fstat-no" title="function not covered" >    as</span>ync findOne(field) {
+<span class="fstat-no" title="function not covered" >    fi</span>ndOne(field) {
 <span class="cstat-no" title="statement not covered" >        return this.userModel.findOne(field).exec();</span>
     }
-<span class="fstat-no" title="function not covered" >    as</span>ync update(input) {
+<span class="fstat-no" title="function not covered" >    up</span>date(input) {
 <span class="cstat-no" title="statement not covered" >        return this.userModel</span>
             .findByIdAndUpdate(input.id, input, { new: true })
             .exec();
@@ -270,7 +276,7 @@ let UsersService = <span class="cstat-no" title="statement not covered" >class U
 <span class="cstat-no" title="statement not covered" >exports.UsersService = UsersService;</span>
 <span class="cstat-no" title="statement not covered" >exports.UsersService = UsersService = __decorate([</span>
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(user_entity_1.User.name)),
+    __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], UsersService);
 //# sourceMappingURL=users.service.js.map</pre></td></tr></table></pre>
@@ -280,7 +286,7 @@ let UsersService = <span class="cstat-no" title="statement not covered" >class U
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-23T19:46:41.281Z
+                at 2025-07-02T19:35:21.994Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
