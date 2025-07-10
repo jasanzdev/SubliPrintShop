@@ -26,9 +26,9 @@ type Query {
 
 input ResetPasswordInput {
   confirmPassword: String!
+  email: String!
   newPassword: String!
   password: String!
-  username: String!
 }
 
 input UpdateUserInput {

@@ -104,9 +104,20 @@
       "^src/(.*)$": "<rootDir>/src/$1"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/**/*.ts",
+      "!src/**/*.d.ts",
+      "!src/**/*.spec.ts",
+      "!src/**/*.test.ts",
+      "!src/**/__*__/*",
+      "!src/main.ts"
     ],
     "coverageDirectory": "../coverage",
+    "coveragePathIgnorePatterns": [
+      "/dist/",
+      "/node_modules/",
+      "/test/",
+      "/coverage/"
+    ],
     "testEnvironment": "node"
   }
 }

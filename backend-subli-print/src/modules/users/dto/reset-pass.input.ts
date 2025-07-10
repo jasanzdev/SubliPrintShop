@@ -7,7 +7,7 @@ import { NotMatch } from 'src/common/decorators/no-match.decorator';
 export class ResetPasswordInput {
   @Field()
   @IsNotEmpty()
-  username: string;
+  email: string;
 
   @Field()
   @IsNotEmpty()

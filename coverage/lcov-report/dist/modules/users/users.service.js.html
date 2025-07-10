@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/48</span>
+                <span class='fraction'>0/51</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/41</span>
+                <span class='fraction'>0/44</span>
             </div>
         
             
@@ -135,7 +135,10 @@
 <a name='L70'></a><a href='#L70'>70</a>
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -161,6 +164,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -234,7 +240,10 @@ let UsersService = <span class="cstat-no" title="statement not covered" >class U
     }
 <span class="fstat-no" title="function not covered" >    as</span>ync create(data) {
         const newUser = <span class="cstat-no" title="statement not covered" >new this.userModel({ ...data });</span>
-<span class="cstat-no" title="statement not covered" >        if (data?.provider &amp;&amp; data.provider !== 'google') {</span>
+<span class="cstat-no" title="statement not covered" >        if (data.provider !== 'google') {</span>
+            const user = <span class="cstat-no" title="statement not covered" >await this.userModel.findOne({ email: data.email }).exec();</span>
+<span class="cstat-no" title="statement not covered" >            if (user)</span>
+<span class="cstat-no" title="statement not covered" >                throw new common_1.ConflictException('An user with this email already exists');</span>
             const hashedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(data.password, 10);</span>
 <span class="cstat-no" title="statement not covered" >            newUser.provider = 'local';</span>
 <span class="cstat-no" title="statement not covered" >            newUser.password = hashedPassword;</span>
@@ -254,13 +263,13 @@ let UsersService = <span class="cstat-no" title="statement not covered" >class U
             .exec();
     }
 <span class="fstat-no" title="function not covered" >    as</span>ync resetPassword(input) {
-        const { username, password, newPassword } = <span class="cstat-no" title="statement not covered" >input;</span>
-        const user = <span class="cstat-no" title="statement not covered" >await this.findOne({ username: username });</span>
+        const { email, password, newPassword } = <span class="cstat-no" title="statement not covered" >input;</span>
+        const user = <span class="cstat-no" title="statement not covered" >await this.findOne({ email: email });</span>
 <span class="cstat-no" title="statement not covered" >        if (!user)</span>
 <span class="cstat-no" title="statement not covered" >            throw new common_1.NotFoundException('User does not exists');</span>
         const isValidPass = <span class="cstat-no" title="statement not covered" >await bcrypt.compare(password, user.password);</span>
 <span class="cstat-no" title="statement not covered" >        if (!isValidPass)</span>
-<span class="cstat-no" title="statement not covered" >            throw new common_1.BadGatewayException('Invalid Password');</span>
+<span class="cstat-no" title="statement not covered" >            throw new common_1.BadRequestException('Invalid Password');</span>
         const hashedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(newPassword, 10);</span>
 <span class="cstat-no" title="statement not covered" >        return this.userModel</span>
             .findByIdAndUpdate(user._id, {
@@ -270,7 +279,7 @@ let UsersService = <span class="cstat-no" title="statement not covered" >class U
     }
 <span class="fstat-no" title="function not covered" >    as</span>ync remove(id) {
         const result = <span class="cstat-no" title="statement not covered" >await this.userModel.findByIdAndDelete(id).exec();</span>
-<span class="cstat-no" title="statement not covered" >        return !!result;</span>
+<span class="cstat-no" title="statement not covered" >        return result !== null;</span>
     }
 };
 <span class="cstat-no" title="statement not covered" >exports.UsersService = UsersService;</span>
@@ -286,7 +295,7 @@ let UsersService = <span class="cstat-no" title="statement not covered" >class U
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-02T19:35:21.994Z
+                at 2025-07-10T15:36:35.472Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/55</span>
+                <span class='fraction'>0/62</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/32</span>
+                <span class='fraction'>0/44</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/48</span>
+                <span class='fraction'>0/55</span>
             </div>
         
             
@@ -168,7 +168,14 @@
 <a name='L103'></a><a href='#L103'>103</a>
 <a name='L104'></a><a href='#L104'>104</a>
 <a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -193,8 +200,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -208,11 +213,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -289,14 +303,15 @@ var __param = <span class="cstat-no" title="statement not covered" >(this &amp;&
 <span class="cstat-no" title="statement not covered" >Object.defineProperty(exports, "__esModule", { value: true });</span>
 <span class="cstat-no" title="statement not covered" >exports.UsersResolver = void 0;</span>
 const graphql_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/graphql");</span>
-const users_service_1 = <span class="cstat-no" title="statement not covered" >require("./users.service");</span>
-const user_entity_1 = <span class="cstat-no" title="statement not covered" >require("./entities/user.entity");</span>
-const create_user_input_1 = <span class="cstat-no" title="statement not covered" >require("./dto/create-user.input");</span>
-const update_user_input_1 = <span class="cstat-no" title="statement not covered" >require("./dto/update-user.input");</span>
 const common_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/common");</span>
+const mongoose_1 = <span class="cstat-no" title="statement not covered" >require("mongoose");</span>
 const get_user_decorator_1 = <span class="cstat-no" title="statement not covered" >require("../../common/decorators/get-user.decorator");</span>
 const gql_jwt_auth_guard_1 = <span class="cstat-no" title="statement not covered" >require("../auth/guards/gql-jwt-auth.guard");</span>
+const users_service_1 = <span class="cstat-no" title="statement not covered" >require("./users.service");</span>
+const create_user_input_1 = <span class="cstat-no" title="statement not covered" >require("./dto/create-user.input");</span>
+const update_user_input_1 = <span class="cstat-no" title="statement not covered" >require("./dto/update-user.input");</span>
 const reset_pass_input_1 = <span class="cstat-no" title="statement not covered" >require("./dto/reset-pass.input");</span>
+const user_entity_1 = <span class="cstat-no" title="statement not covered" >require("./entities/user.entity");</span>
 let UsersResolver = <span class="cstat-no" title="statement not covered" >class UsersResolver {</span>
     usersService;
 <span class="fstat-no" title="function not covered" >    co</span>nstructor(usersService) {
@@ -309,15 +324,21 @@ let UsersResolver = <span class="cstat-no" title="statement not covered" >class 
 <span class="cstat-no" title="statement not covered" >        return this.usersService.findAll();</span>
     }
 <span class="fstat-no" title="function not covered" >    us</span>er(id) {
+<span class="cstat-no" title="statement not covered" >        if (!id || !(0, mongoose_1.isValidObjectId)(id))</span>
+<span class="cstat-no" title="statement not covered" >            throw new common_1.BadRequestException('Invalid Id');</span>
 <span class="cstat-no" title="statement not covered" >        return this.usersService.findOne({ _id: id });</span>
     }
 <span class="fstat-no" title="function not covered" >    up</span>dateUser(input) {
+<span class="cstat-no" title="statement not covered" >        if (!input.id || !(0, mongoose_1.isValidObjectId)(input.id))</span>
+<span class="cstat-no" title="statement not covered" >            throw new common_1.BadRequestException('Invalid Id');</span>
 <span class="cstat-no" title="statement not covered" >        return this.usersService.update(input);</span>
     }
 <span class="fstat-no" title="function not covered" >    re</span>setPassword(input) {
 <span class="cstat-no" title="statement not covered" >        return this.usersService.resetPassword(input);</span>
     }
 <span class="fstat-no" title="function not covered" >    re</span>moveUser(id) {
+<span class="cstat-no" title="statement not covered" >        if (!id || !(0, mongoose_1.isValidObjectId)(id))</span>
+<span class="cstat-no" title="statement not covered" >            throw new common_1.BadRequestException('Invalid Id');</span>
 <span class="cstat-no" title="statement not covered" >        return this.usersService.remove(id);</span>
     }
 <span class="fstat-no" title="function not covered" >    ge</span>tProfile(user) {
@@ -385,7 +406,7 @@ let UsersResolver = <span class="cstat-no" title="statement not covered" >class 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-02T19:35:21.994Z
+                at 2025-07-10T15:36:35.472Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

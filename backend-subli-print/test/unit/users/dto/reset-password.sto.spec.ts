@@ -5,7 +5,7 @@ import { ResetPasswordInput } from 'src/modules/users/dto/reset-pass.input';
 describe('ResetPasswordInput', () => {
   it('should validate a valid input', async () => {
     const input = plainToInstance(ResetPasswordInput, {
-      username: 'jasanz',
+      email: 'testing@gmail.com',
       password: 'Password123!',
       newPassword: 'Password@123',
       confirmPassword: 'Password@123',
@@ -17,7 +17,7 @@ describe('ResetPasswordInput', () => {
 
   it('should fail if password too short', async () => {
     const input = plainToInstance(ResetPasswordInput, {
-      username: 'jasanz',
+      email: 'testing@gmail.com',
       password: 'Passwd',
       newPassword: 'Password123',
       confirmPassword: 'Password123',
@@ -30,7 +30,7 @@ describe('ResetPasswordInput', () => {
 
   it('should fail if the password and newPassword are equal', async () => {
     const input = plainToInstance(ResetPasswordInput, {
-      username: 'jasanz',
+      email: 'testing@gmail.com',
       password: 'Password123!',
       newPassword: 'Password123!',
       confirmPassword: 'Password123!',
@@ -43,7 +43,7 @@ describe('ResetPasswordInput', () => {
 
   it('should fail if newPassword too weak', async () => {
     const input = plainToInstance(ResetPasswordInput, {
-      username: 'jasanz',
+      email: 'testing@gmail.com',
       password: 'Password123!',
       newPassword: 'Password123',
       confirmPassword: 'Password123',
@@ -56,7 +56,7 @@ describe('ResetPasswordInput', () => {
 
   it('should fail if the newPassword and confirmPassword are not equal', async () => {
     const input = plainToInstance(ResetPasswordInput, {
-      username: 'jasanz',
+      email: 'testing@gmail.com',
       password: 'Password123!',
       newPassword: 'Password@123',
       confirmPassword: 'Password123!',

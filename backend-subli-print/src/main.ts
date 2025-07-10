@@ -24,7 +24,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.use(sessionMiddleware);
-  app.use(csrf.doubleCsrfProtection);
+  // app.use(csrf.doubleCsrfProtection);
 
   app.enableCors(corsOptions);
   app.use(json({ limit: '10mb' }));

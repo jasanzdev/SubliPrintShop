@@ -37,5 +37,5 @@ export class CreateUserInput {
   @IsValidRole()
   role?: string;
 
-  provider?: 'local';
+  provider?: 'local' | 'google';
 }

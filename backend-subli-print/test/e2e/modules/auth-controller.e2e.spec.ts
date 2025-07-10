@@ -6,7 +6,7 @@ import mongoose, { Model } from 'mongoose';
 import { User } from 'src/modules/users/schemas/user.schema';
 import { getModelToken } from '@nestjs/mongoose';
 import { AppModule } from 'src/app.module';
-import { loginRoute, testUser, validCredentials } from '../../utils/constants';
+import { loginRoute } from '../../utils/constants';
 import { TokenService } from 'src/modules/auth/services/token.service';
 import { RefreshToken } from 'src/modules/auth/schemas/refresh-token.schema';
 import { envs } from 'src/config/envs';
@@ -16,6 +16,20 @@ describe('AuthController (e2e)', () => {
   let userModel: Model<User>;
   let refreshTokenModel: Model<RefreshToken>;
   let tokenService: TokenService;
+
+  const testUser = {
+    name: 'test',
+    username: 'testing',
+    email: 'testing@example.com',
+    password: 'Test1234!',
+    role: 'CLIENT',
+    provider: 'local',
+  };
+
+  const validCredentials = {
+    email: 'testing@example.com',
+    password: 'Test1234!',
+  };
 
   beforeAll(async () => {
     app = await createTestApp({ useCsrf: false });
@@ -33,6 +47,7 @@ describe('AuthController (e2e)', () => {
 
   describe('auth/login', () => {
     it('should authenticate with valid credentials and return access_token and set refresh_token in cookie', async () => {
+      await refreshTokenModel.deleteMany({});
       const hashedPassword = await bcrypt.hash(testUser.password, 10);
       await userModel.create({ ...testUser, password: hashedPassword });
       const res = await request(app.getHttpServer())

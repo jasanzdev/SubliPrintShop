@@ -23,7 +23,7 @@ describe('Validation Pipes', () => {
   it('should return a Rest error with validation details and ignore unknown fields (like hacker)', async () => {
     const response = await request(app.getHttpServer())
       .post(loginRoute)
-      .send({ email: 'jasanz@gmail.com', password: 'JoseAlejo', hacker: true })
+      .send({ email: 'jasanz@gmail.com', password: 'JoseAle', hacker: true })
       .expect(400);
 
     const error = response.body as GqlBadRequestErrorResponse['extensions'];

@@ -5,7 +5,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Model } from 'mongoose';
 import { RefreshToken } from 'src/modules/auth/schemas/refresh-token.schema';
 import { TokenService } from 'src/modules/auth/services/token.service';
-import { mockRefreshToken } from '../../../utils/constants';
 import { AccessPayload } from 'src/common/interfaces/payloads.interface';
 import { envs } from 'src/config/envs';
 
@@ -15,6 +14,12 @@ describe('TokenService', () => {
   let tokenService: TokenService;
   let jwtService: jest.Mocked<JwtService>;
   let refreshTokenModel: jest.Mocked<Model<RefreshToken>>;
+
+  const mockRefreshToken = {
+    _id: '123',
+    email: 'test@example.com',
+    token: 'hashedToken',
+  } as RefreshToken;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

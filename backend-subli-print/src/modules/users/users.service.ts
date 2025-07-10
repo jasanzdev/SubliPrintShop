@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import {
-  BadGatewayException,
+  BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -18,7 +19,13 @@ export class UsersService {
 
   async create(data: CreateUserInput | GoogleProfile): Promise<User> {
     const newUser = new this.userModel({ ...data });
-    if (data?.provider && data.provider !== 'google') {
+
+    if (data.provider !== 'google') {
+      const user = await this.userModel.findOne({ email: data.email }).exec();
+
+      if (user)
+        throw new ConflictException('An user with this email already exists');
+
       const hashedPassword = await bcrypt.hash(data.password, 10);
       newUser.provider = 'local';
       newUser.password = hashedPassword;
@@ -43,11 +50,11 @@ export class UsersService {
   }
 
   async resetPassword(input: ResetPasswordInput) {
-    const { username, password, newPassword } = input;
-    const user = await this.findOne({ username: username });
+    const { email, password, newPassword } = input;
+    const user = await this.findOne({ email: email });
     if (!user) throw new NotFoundException('User does not exists');
     const isValidPass = await bcrypt.compare(password, user.password as string);
-    if (!isValidPass) throw new BadGatewayException('Invalid Password');
+    if (!isValidPass) throw new BadRequestException('Invalid Password');
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     return this.userModel
       .findByIdAndUpdate(user._id, {
@@ -58,6 +65,6 @@ export class UsersService {
 
   async remove(id: string): Promise<boolean> {
     const result = await this.userModel.findByIdAndDelete(id).exec();
-    return !!result;
+    return result !== null;
   }
 }

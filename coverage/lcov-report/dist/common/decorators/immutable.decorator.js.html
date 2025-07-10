@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for dist/bootstrap/pipes.config.js</title>
+    <title>Code coverage report for dist/common/decorators/immutable.decorator.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">dist/bootstrap</a> pipes.config.js</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">dist/common/decorators</a> immutable.decorator.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -30,23 +30,23 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
@@ -81,59 +81,71 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 <span class="cstat-no" title="statement not covered" >Object.defineProperty(exports, "__esModule", { value: true });</span>
-<span class="cstat-no" title="statement not covered" >exports.validationGlobalPipes = void 0;</span>
-const common_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/common");</span>
-<span class="cstat-no" title="statement not covered" >exports.validationGlobalPipes = new common_1.ValidationPipe({</span>
-    whitelist: true,
-    transform: true,
-    stopAtFirstError: false,
-    exceptionFactory: <span class="fstat-no" title="function not covered" >(e</span>rrors) =&gt; {
-        const result = <span class="cstat-no" title="statement not covered" >errors.map(<span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-            field: error.property,
-            message: error.constraints
-                ? Object.values(error.constraints)[0]
-                : 'Validation error',
-        }));
-<span class="cstat-no" title="statement not covered" >        return new common_1.BadRequestException(result);</span>
-    },
-});
-//# sourceMappingURL=pipes.config.js.map</pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >exports.Immutable = Immutable;</span>
+const class_validator_1 = <span class="cstat-no" title="statement not covered" >require("class-validator");</span>
+function <span class="fstat-no" title="function not covered" >Immutable(</span>validationOptions) {
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >fu</span>nction (object, propertyName) {</span>
+<span class="cstat-no" title="statement not covered" >        (0, class_validator_1.registerDecorator)({</span>
+            name: 'immutable',
+            target: object.constructor,
+            propertyName: propertyName,
+            options: validationOptions,
+            validator: {
+<span class="fstat-no" title="function not covered" >                va</span>lidate(value) {
+<span class="cstat-no" title="statement not covered" >                    return value === 'undefined';</span>
+                },
+<span class="fstat-no" title="function not covered" >                de</span>faultMessage() {
+<span class="cstat-no" title="statement not covered" >                    return `The ${propertyName} cannot be modified`;</span>
+                },
+            },
+        });
+    };
+}
+//# sourceMappingURL=immutable.decorator.js.map</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-23T19:46:41.281Z
+                at 2025-07-10T15:36:35.472Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
     </body>
 </html>
     

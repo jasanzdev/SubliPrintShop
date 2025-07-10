@@ -1,6 +1,8 @@
 import { Profile } from 'passport-google-oauth20';
-import { UserPlainObject } from 'src/common/interfaces/user.interface';
-import { RefreshToken } from 'src/modules/auth/schemas/refresh-token.schema';
+import { GoogleProfile } from 'src/common/interfaces/user.interface';
+import { CreateUserInput } from 'src/modules/users/dto/create-user.input';
+import { ResetPasswordInput } from 'src/modules/users/dto/reset-pass.input';
+import { UpdateUserInput } from 'src/modules/users/dto/update-user.input';
 import { User } from 'src/modules/users/schemas/user.schema';
 
 export const validOrigin = 'https://myfrontend.com';
@@ -8,26 +10,12 @@ export const invalidOrigin = 'https://another-site.com';
 export const csrfRoute = '/api/sps1/csrf/csrf-token';
 export const loginRoute = '/api/sps1/auth/login';
 
-export const testUser = {
-  name: 'test',
-  username: 'testing',
-  email: 'testing@example.com',
-  password: 'Test1234!',
-  role: 'CLIENT',
-  provider: 'local',
-};
-
-export const validCredentials = {
-  email: 'testing@example.com',
-  password: 'Test1234!',
-};
-
-export const mockUser = {
+export const mockSavedUser = {
   _id: '123',
   name: 'test',
   username: 'testing',
   email: 'testing@example.com',
-  password: 'hashed',
+  password: 'hashedPassword',
   role: 'CLIENT',
   provider: 'local',
   toObject: () => ({
@@ -40,16 +28,50 @@ export const mockUser = {
   }),
 } as User;
 
-export const mockUserWithoutPass = {
-  _id: '123',
+export const mockSavedUserArray = [
+  mockSavedUser,
+  {
+    _id: '345',
+    name: 'test2',
+    username: 'testing2',
+    email: 'testing2@example.com',
+    password: 'hashedPassword',
+    role: 'CLIENT',
+    provider: 'local',
+    toObject: () => ({
+      _id: '345',
+      name: 'test2',
+      username: 'testing2',
+      email: 'testing2@example.com',
+      role: 'CLIENT',
+      provider: 'local',
+    }),
+  } as User,
+];
+
+export const mockCreateUserInput: CreateUserInput = {
   name: 'test',
   username: 'testing',
   email: 'testing@example.com',
-  role: 'CLIENT',
+  password: 'Password123!',
+  confirmPassword: 'Password123!',
   provider: 'local',
-} as UserPlainObject;
+  role: 'CLIENT',
+};
 
-export const mockUserGoogleProfile = {
+export const mockUpdateUserInput: UpdateUserInput = {
+  id: '123',
+  name: 'test',
+};
+
+export const mockResetPasswordInput: ResetPasswordInput = {
+  email: 'testing@example.com',
+  password: 'Password123!',
+  newPassword: 'Password@123',
+  confirmPassword: 'Password@123',
+};
+
+export const mockSavedUserGoogle = {
   _id: '123',
   googleId: 'google-id',
   name: 'test',
@@ -70,7 +92,7 @@ export const mockUserGoogleProfile = {
 export const mockProfile: Profile = {
   id: 'google-id',
   displayName: 'test',
-  emails: [{ value: 'test@example.com', verified: true }],
+  emails: [{ value: 'testing@example.com', verified: true }],
   photos: [{ value: 'photo-url' }],
   provider: 'google',
   profileUrl: 'url_profile',
@@ -86,8 +108,12 @@ export const mockProfile: Profile = {
   },
 };
 
-export const mockRefreshToken = {
-  _id: '123',
-  email: 'test@example.com',
-  token: 'hashedToken',
-} as RefreshToken;
+export const mockUserGoogleProfile: GoogleProfile = {
+  googleId: 'google-id',
+  name: 'test',
+  username: 'testing',
+  email: 'testing@example.com',
+  avatar: 'photo-url',
+  role: 'CLIENT',
+  provider: 'google',
+};
