@@ -5,17 +5,18 @@ import { createTestApp } from '../../utils/create-app';
 import mongoose, { Model } from 'mongoose';
 import { User } from 'src/modules/users/schemas/user.schema';
 import { getModelToken } from '@nestjs/mongoose';
-import { AppModule } from 'src/app.module';
 import { loginRoute } from '../../utils/constants';
 import { TokenService } from 'src/modules/auth/services/token.service';
 import { RefreshToken } from 'src/modules/auth/schemas/refresh-token.schema';
 import { envs } from 'src/config/envs';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 describe('AuthController (e2e)', () => {
   let app: NestExpressApplication;
   let userModel: Model<User>;
   let refreshTokenModel: Model<RefreshToken>;
   let tokenService: TokenService;
+  let mongod: MongoMemoryServer;
 
   const testUser = {
     name: 'test',
@@ -32,24 +33,37 @@ describe('AuthController (e2e)', () => {
   };
 
   beforeAll(async () => {
-    app = await createTestApp({ useCsrf: false });
-    const moduleRef = app.select(AppModule);
-    userModel = moduleRef.get<Model<User>>(getModelToken(User.name));
-    refreshTokenModel = moduleRef.get<Model<RefreshToken>>(
+    mongod = await MongoMemoryServer.create();
+    const uri = mongod.getUri();
+    const result = await createTestApp({ useCsrf: false, mongoUri: uri });
+    app = result.app;
+
+    tokenService = result.moduleRef.get<TokenService>(TokenService);
+    userModel = result.moduleRef.get<Model<User>>(getModelToken(User.name));
+    refreshTokenModel = result.moduleRef.get<Model<RefreshToken>>(
       getModelToken(RefreshToken.name),
     );
-    tokenService = moduleRef.get(TokenService);
   });
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await userModel.deleteMany({});
+    await refreshTokenModel.deleteMany({});
+  });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
+    await mongod.stop();
+    await app.close();
   });
 
   describe('auth/login', () => {
     it('should authenticate with valid credentials and return access_token and set refresh_token in cookie', async () => {
-      await refreshTokenModel.deleteMany({});
       const hashedPassword = await bcrypt.hash(testUser.password, 10);
-      await userModel.create({ ...testUser, password: hashedPassword });
+      await userModel.create({
+        ...testUser,
+        password: hashedPassword,
+      });
+
       const res = await request(app.getHttpServer())
         .post(loginRoute)
         .send(validCredentials)
@@ -128,11 +142,5 @@ describe('AuthController (e2e)', () => {
 
       expect(res.headers['location']).toBe(envs.frontendRedirectUri);
     });
-  });
-
-  afterAll(async () => {
-    await app.close();
-    await mongoose.connection.db?.dropDatabase();
-    await mongoose.disconnect();
   });
 });

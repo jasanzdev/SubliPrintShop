@@ -15,7 +15,9 @@ import { csrf } from './config/csrf.config';
 
 async function bootstrap() {
   const logger = new Logger('App');
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(
+    AppModule.register(envs.mongoUrl),
+  );
   app.setGlobalPrefix('api/sps1');
 
   app.useGlobalPipes(validationGlobalPipes);

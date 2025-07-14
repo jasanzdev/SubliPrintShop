@@ -7,6 +7,7 @@ describe('CreateUserInput', () => {
     const input = plainToInstance(CreateUserInput, {
       name: 'Jose A',
       username: 'jasanz',
+      phone: '092560132',
       email: 'jasanz.example@gmail.com',
       password: 'Password123!',
       confirmPassword: 'Password123!',
@@ -34,6 +35,21 @@ describe('CreateUserInput', () => {
     const input = plainToInstance(CreateUserInput, {
       name: 'Jose A',
       username: 'ja',
+      email: 'jasanz.example@gmail.com',
+      password: 'Password123!',
+      confirmPassword: 'Password123!',
+    });
+
+    const errors = await validate(input);
+    expect(errors.length).toBeGreaterThanOrEqual(1);
+    expect(errors[0].constraints).toHaveProperty('minLength');
+  });
+
+  it('should fail if phone number is invalid', async () => {
+    const input = plainToInstance(CreateUserInput, {
+      name: 'Jose A',
+      username: 'jasanz',
+      phone: '0267642',
       email: 'jasanz.example@gmail.com',
       password: 'Password123!',
       confirmPassword: 'Password123!',

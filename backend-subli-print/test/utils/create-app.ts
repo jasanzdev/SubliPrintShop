@@ -13,13 +13,15 @@ import { MockGoogleAuthGuard } from './test-app.factory';
 
 interface AppProps {
   useCsrf?: boolean;
+  mongoUri: string;
 }
 
-export async function createTestApp({
-  useCsrf,
-}: AppProps): Promise<NestExpressApplication> {
+export async function createTestApp({ useCsrf, mongoUri }: AppProps): Promise<{
+  app: NestExpressApplication;
+  moduleRef: TestingModule;
+}> {
   const moduleRef: TestingModule = await Test.createTestingModule({
-    imports: [AppModule],
+    imports: [AppModule.register(mongoUri)],
   })
     .overrideGuard(AuthGuard('google'))
     .useClass(MockGoogleAuthGuard)
@@ -38,5 +40,5 @@ export async function createTestApp({
   app.use(urlencoded({ extended: true, limit: '10mb' }));
 
   await app.init();
-  return app;
+  return { app, moduleRef };
 }

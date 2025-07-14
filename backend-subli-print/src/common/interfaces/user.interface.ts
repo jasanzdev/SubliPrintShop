@@ -5,6 +5,7 @@ export interface UserPlainObject {
   _id: string;
   name: string;
   username: string;
+  phone?: string;
   email: string;
   password?: string;
   role: Role;

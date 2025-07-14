@@ -1,5 +1,12 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsEmail, IsString, Matches, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsOptional,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { Match } from 'src/common/decorators/match.decorator';
 import { IsValidRole } from 'src/common/decorators/valid-role.decorator';
 
@@ -14,6 +21,13 @@ export class CreateUserInput {
   @IsString()
   @MinLength(3)
   username: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsString()
+  @MinLength(9)
+  @MaxLength(12)
+  phone?: string;
 
   @Field()
   @IsEmail()

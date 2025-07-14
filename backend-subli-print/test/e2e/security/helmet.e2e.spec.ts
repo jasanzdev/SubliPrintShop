@@ -3,12 +3,18 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { csrfRoute } from '../../utils/constants';
 import { envs } from 'src/config/envs';
 import { createTestApp } from '../../utils/create-app';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from 'mongoose';
 
 describe('Helmet Middleware (e2e)', () => {
   let app: NestExpressApplication;
+  let mongod: MongoMemoryServer;
 
   beforeAll(async () => {
-    app = await createTestApp({ useCsrf: false });
+    mongod = await MongoMemoryServer.create();
+    const uri = mongod.getUri();
+    const result = await createTestApp({ useCsrf: true, mongoUri: uri });
+    app = result.app;
     envs.whitelist = ['https://myfrontend.com'];
   });
 
@@ -30,6 +36,8 @@ describe('Helmet Middleware (e2e)', () => {
   });
 
   afterAll(async () => {
+    await mongoose.disconnect();
+    await mongod.stop();
     await app.close();
   });
 });

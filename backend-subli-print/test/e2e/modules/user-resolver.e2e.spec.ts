@@ -1,37 +1,63 @@
 import * as request from 'supertest';
+import * as bcrypt from 'bcrypt';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { createTestApp } from '../../utils/create-app';
-import { disconnect, Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { GqlBadRequestErrorResponse } from '../../utils/interfaces';
 import { User } from 'src/modules/users/schemas/user.schema';
-import { AppModule } from 'src/app.module';
 import { getModelToken } from '@nestjs/mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 describe('UserResolver (e2e)', () => {
   let app: NestExpressApplication;
   let userModel: Model<User>;
-  let userId: string;
+  let mongod: MongoMemoryServer;
+
+  const createUser = async () => {
+    const password = await bcrypt.hash('Password123!', 10);
+    const user: User = await userModel.create({
+      name: 'test',
+      username: 'testing',
+      email: 'testing@example.com',
+      password: password,
+    });
+
+    return user;
+  };
 
   beforeAll(async () => {
-    app = await createTestApp({ useCsrf: false });
-    const moduleRef = app.select(AppModule);
-    userModel = moduleRef.get<Model<User>>(getModelToken(User.name));
+    mongod = await MongoMemoryServer.create();
+    const uri = mongod.getUri();
+    const result = await createTestApp({ useCsrf: false, mongoUri: uri });
+    app = result.app;
+    userModel = result.moduleRef.get<Model<User>>(getModelToken(User.name));
+  });
+
+  afterEach(async () => {
+    await userModel.deleteMany({});
+  });
+
+  afterAll(async () => {
+    await mongoose.disconnect();
+    await mongod.stop();
+    await app.close();
+  });
+
+  beforeEach(async () => {
+    await userModel.deleteMany({});
   });
 
   describe('CreateUser', () => {
     it('Should return specified fields with the valid input', async () => {
+      await userModel.deleteMany({});
       interface GqlResponse {
         body: {
           data: {
             createUser: { _id: string; name: string; email: string };
-            users: {
-              name: string;
-              email: string;
-            };
           };
         };
       }
-      await userModel.deleteMany({});
+
       const createUserMutation = `
       mutation {
         createUser(input: {
@@ -49,20 +75,26 @@ describe('UserResolver (e2e)', () => {
       `;
       const res = await request(app.getHttpServer())
         .post('/graphql')
-        .send({ query: createUserMutation })
-        .expect(200);
+        .send({ query: createUserMutation });
 
       expect((res as GqlResponse).body.data).toBeDefined();
-      expect((res as GqlResponse).body.data.createUser).toBeDefined();
-      expect((res as GqlResponse).body.data.createUser.name).toBeDefined();
-      expect((res as GqlResponse).body.data.createUser.email).toBeDefined();
-
-      userId = (res as GqlResponse).body.data.createUser._id;
+      expect((res as GqlResponse).body.data).toEqual(
+        expect.objectContaining({
+          createUser: {
+            _id: (res as GqlResponse).body.data.createUser._id,
+            name: 'test',
+            email: 'testing@example.com',
+          },
+        }),
+      );
     });
   });
 
   describe('users', () => {
     it('Query Users should return a list of users', async () => {
+      await userModel.deleteMany({});
+      await createUser();
+
       interface GqlResponse {
         body: {
           data: {
@@ -98,6 +130,8 @@ describe('UserResolver (e2e)', () => {
 
   describe('user', () => {
     it('Should return an user with the correct id', async () => {
+      await userModel.deleteMany({});
+      const { _id } = await createUser();
       interface GqlResponse {
         body: {
           data: {
@@ -110,7 +144,7 @@ describe('UserResolver (e2e)', () => {
       }
       const userQuery = ` 
           query {
-            user(id: "${userId}") {
+            user(id: "${String(_id)}") {
               name
               email
           }
@@ -120,14 +154,20 @@ describe('UserResolver (e2e)', () => {
         .post('/graphql')
         .send({ query: userQuery });
 
-      expect((res as GqlResponse).body.data.user).toBeDefined();
-      expect((res as GqlResponse).body.data.user.name).toBe('test');
-      expect((res as GqlResponse).body.data.user.email).toBe(
-        'testing@example.com',
+      expect((res as GqlResponse).body.data).toBeDefined();
+      expect((res as GqlResponse).body.data).toEqual(
+        expect.objectContaining({
+          user: {
+            name: 'test',
+            email: 'testing@example.com',
+          },
+        }),
       );
     });
 
     it('Should throw BadRequestException if ID is invalid', async () => {
+      await userModel.deleteMany({});
+      await createUser();
       const userQuery = `
       query {
         user(id: "1234Wrong") {
@@ -155,6 +195,8 @@ describe('UserResolver (e2e)', () => {
 
   describe('updateUser', () => {
     it('Should return specified fields with the valid input', async () => {
+      await userModel.deleteMany({});
+      const { _id } = await createUser();
       interface GqlResponse {
         body: {
           data: {
@@ -168,8 +210,8 @@ describe('UserResolver (e2e)', () => {
       const updateUserMutation = `
         mutation {
           updateUser(input: {
-            id: "${userId}"   
-            name: "testing",
+            id: "${String(_id)}"   
+            name: "updated",
           }) {
             name
             email
@@ -180,11 +222,20 @@ describe('UserResolver (e2e)', () => {
         .post('/graphql')
         .send({ query: updateUserMutation });
 
-      expect((res as GqlResponse).body.data.updateUser).toBeDefined();
-      expect((res as GqlResponse).body.data.updateUser.name).toBe('testing');
+      expect((res as GqlResponse).body.data).toBeDefined();
+      expect((res as GqlResponse).body.data).toEqual(
+        expect.objectContaining({
+          updateUser: {
+            name: 'updated',
+            email: 'testing@example.com',
+          },
+        }),
+      );
     });
 
     it('Should throw BadRequestException if ID is invalid', async () => {
+      await userModel.deleteMany({});
+      await createUser();
       const updateUserMutation = `
         mutation {
           updateUser(input: {
@@ -216,6 +267,8 @@ describe('UserResolver (e2e)', () => {
 
   describe('resetPassword', () => {
     it('Should return specified fields with the valid input', async () => {
+      await userModel.deleteMany({});
+      await createUser();
       interface GqlResponse {
         body: {
           data: {
@@ -235,7 +288,7 @@ describe('UserResolver (e2e)', () => {
                                  confirmPassword: "Password123!!",
                                }) {
                                   name
-                                 email
+                                  email
                               }
                             }
                             `;
@@ -243,9 +296,14 @@ describe('UserResolver (e2e)', () => {
         .post('/graphql')
         .send({ query: resetPasswordMutation });
 
-      expect((res as GqlResponse).body.data.resetPassword).toBeDefined();
-      expect((res as GqlResponse).body.data.resetPassword.email).toBe(
-        'testing@example.com',
+      expect((res as GqlResponse).body.data).toBeDefined();
+      expect((res as GqlResponse).body.data).toEqual(
+        expect.objectContaining({
+          resetPassword: {
+            name: 'test',
+            email: 'testing@example.com',
+          },
+        }),
       );
     });
   });
@@ -275,6 +333,8 @@ describe('UserResolver (e2e)', () => {
     });
 
     it('Should return true with correct id', async () => {
+      await userModel.deleteMany({});
+      const { _id } = await createUser();
       interface GqlResponse {
         body: {
           data: {
@@ -284,7 +344,7 @@ describe('UserResolver (e2e)', () => {
       }
       const removeMutation = `
                             mutation{
-                              removeUser(id : "${userId}")
+                              removeUser(id : "${String(_id)}")
                             }
                          `;
 
@@ -294,10 +354,5 @@ describe('UserResolver (e2e)', () => {
 
       expect((res as GqlResponse).body.data.removeUser).toBeTruthy();
     });
-  });
-
-  afterAll(async () => {
-    await app.close();
-    await disconnect();
   });
 });

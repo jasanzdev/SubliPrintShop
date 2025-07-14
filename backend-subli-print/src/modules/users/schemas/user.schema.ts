@@ -20,6 +20,9 @@ export class User extends Document {
   @Prop({ type: String, required: true, unique: true })
   username: string;
 
+  @Prop({ type: String })
+  phone?: string;
+
   @Prop({ type: String, required: true, unique: true, index: true })
   email: string;
 

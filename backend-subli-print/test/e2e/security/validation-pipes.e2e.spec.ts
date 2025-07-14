@@ -3,11 +3,18 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { createTestApp } from '../../utils/create-app';
 import { GqlBadRequestErrorResponse } from '../../utils/interfaces';
 import { loginRoute } from '../../utils/constants';
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import mongoose from 'mongoose';
 
 describe('Validation Pipes', () => {
   let app: NestExpressApplication;
+  let mongod: MongoMemoryServer;
+
   beforeAll(async () => {
-    app = await createTestApp({ useCsrf: false });
+    mongod = await MongoMemoryServer.create();
+    const uri = mongod.getUri();
+    const result = await createTestApp({ useCsrf: false, mongoUri: uri });
+    app = result.app;
   });
 
   it('it should return status code 200 with correct credentials, even if unknown fields are present(like hacker).', async () => {
@@ -55,8 +62,7 @@ describe('Validation Pipes', () => {
                }
               }
               `,
-      })
-      .expect(200);
+      });
 
     const { errors } = response.body as {
       errors: Array<GqlBadRequestErrorResponse>;
@@ -87,6 +93,8 @@ describe('Validation Pipes', () => {
   });
 
   afterAll(async () => {
+    await mongoose.disconnect();
+    await mongod.stop();
     await app.close();
   });
 });

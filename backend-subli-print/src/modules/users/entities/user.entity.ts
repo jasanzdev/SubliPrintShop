@@ -12,6 +12,9 @@ export class User {
   @Field(() => String)
   username: string;
 
+  @Field({ nullable: true })
+  phone?: string;
+
   @Field(() => String)
   email: string;
 
